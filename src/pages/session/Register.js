@@ -25,7 +25,6 @@ export const Register = (props) => {
   const initialValues = {
     email: "",
     nickname: "",
-    biography: "",
     password: "",
     passwordConfirmation: "",
   };
@@ -48,7 +47,7 @@ export const ShowForm = (props) => {
       showMessage("success", `Succesfully created user`);
 
       setTimeout(() => {
-        history.push(`/login`);
+        history.push(`/profile`);
       }, 1000);
     } catch (e) {
       showMessage(
@@ -92,13 +91,6 @@ export const ShowForm = (props) => {
                         <TextFieldContainer
                           id="nickname"
                           label="Nickname"
-                          formikProps={formikProps}
-                        />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <TextFieldContainer
-                          id="biography"
-                          label="Biography"
                           formikProps={formikProps}
                         />
                       </Grid>
