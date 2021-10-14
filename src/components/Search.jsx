@@ -16,7 +16,7 @@ import {
   getLanguages,
   getTags,
   searchProjectByQuery,
-} from "../utils/Projects";
+} from "../utils/Server";
 import debounce from "lodash/debounce";
 import styled from "styled-components";
 

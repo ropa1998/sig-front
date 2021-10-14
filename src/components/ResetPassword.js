@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { Grid, Button, Typography, Container, Box } from "@mui/material";
 import TextFieldContainer from "./TextFieldContainer";
 import { withSnackbar } from "./SnackBarHOC";
-import { resetPassword } from "../utils/Projects";
+import { resetPassword } from "../utils/Server";
 import { useHistory } from "react-router";
 
 function ResetPassword(props) {

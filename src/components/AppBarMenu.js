@@ -1,83 +1,114 @@
 import {
-  AppBar,
-  Box,
-  Grid,
-  IconButton,
-  Link,
-  Menu,
-  MenuItem,
-  Toolbar,
-  Typography,
+    AppBar,
+    Box,
+    Grid,
+    IconButton,
+    Link,
+    Menu,
+    MenuItem,
+    Toolbar,
+    Typography,
 } from "@mui/material";
 
 import React from "react";
-import { AccountCircle } from "@mui/icons-material";
-import { useAuth } from "../contexts/AuthContext";
+import {AccountCircle, List} from "@mui/icons-material";
+import {useAuth} from "../contexts/AuthContext";
 
 export const AppBarMenu = () => {
-  const { isLoggedIn, logOut } = useAuth();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+    const {isLoggedIn, logOut, isAdmin} = useAuth();
+    const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const [anchorElUtility, setAnchorElUtility] = React.useState(null);
 
-  const handleLogOut = () => {
-    logOut();
-    handleClose();
-    window.location.replace("/login");
-  };
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+    const handleLogOut = () => {
+        logOut();
+        handleCloseUserMenu();
+        handleCloseUtilityMenu();
+        window.location.replace("/login");
+    };
+    const handleUserMenu = (event) => {
+        setAnchorElUser(event.currentTarget);
+    };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+    const handleCloseUserMenu = () => {
+        setAnchorElUser(null);
+    };
 
-  return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          <Grid container justifyContent="space-between" alignItems="center">
-            <Grid item>
-              <Typography variant="h6">A2</Typography>
-            </Grid>
-            <Grid item>
-              {isLoggedIn && (
-                <div>
-                  <IconButton onClick={handleMenu} color="inherit">
-                    <AccountCircle />
-                  </IconButton>
-                  <Menu
-                    id="menu-appbar"
-                    anchorEl={anchorEl}
-                    anchorOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                    open={Boolean(anchorEl)}
-                    onClose={handleClose}
-                  >
-                    <Link href="/profile" color={"inherit"} underline={"none"}>
-                      <MenuItem onClick={handleClose}>Profile</MenuItem>
-                    </Link>
-                    <Link
-                      href="/my-projects"
-                      color={"inherit"}
-                      underline={"none"}
-                    >
-                      <MenuItem onClick={handleClose}>My Projects</MenuItem>
-                    </Link>
-                    <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
-                  </Menu>
-                </div>
-              )}
-            </Grid>
-          </Grid>
-        </Toolbar>
-      </AppBar>
-    </Box>
-  );
+    const handleUtilityMenu = (event) => {
+        setAnchorElUtility(event.currentTarget);
+    };
+
+    const handleCloseUtilityMenu = () => {
+        setAnchorElUtility(null);
+    };
+
+    return (
+        <Box sx={{flexGrow: 1}}>
+            <AppBar position="static">
+                <Toolbar>
+                    <Grid container justifyContent="space-between" alignItems="center">
+                        <Link href="/home" color={"inherit"} underline={"none"}>
+                            <Typography variant="h6">Quilmes SIG</Typography>
+                        </Link>
+                        <Grid item>
+                            {isLoggedIn && (
+                                <div>
+                                    <IconButton onClick={handleUtilityMenu} color="inherit">
+                                        <List/>
+                                    </IconButton>
+                                    <Menu
+                                        id="utility-appbar"
+                                        anchorEl={anchorElUtility}
+                                        anchorOrigin={{
+                                            vertical: "top",
+                                            horizontal: "right",
+                                        }}
+                                        keepMounted
+                                        transformOrigin={{
+                                            vertical: "top",
+                                            horizontal: "right",
+                                        }}
+                                        open={Boolean(anchorElUtility)}
+                                        onClose={handleCloseUtilityMenu}
+                                    >
+                                        <Link href="/add-rack" color={"inherit"} underline={"none"}>
+                                            <MenuItem onClick={handleCloseUserMenu}>Add Rack</MenuItem>
+                                        </Link>
+                                        <Link href="/racks" color={"inherit"} underline={"none"}>
+                                            <MenuItem onClick={handleCloseUserMenu}>Rack List</MenuItem>
+                                        </Link>
+                                        <Link href="/add-user" color={"inherit"} underline={"none"}>
+                                            <MenuItem onClick={handleCloseUserMenu}>Add User</MenuItem>
+                                        </Link>
+                                    </Menu>
+                                    <IconButton onClick={handleUserMenu} color="inherit">
+                                        <AccountCircle/>
+                                    </IconButton>
+                                    <Menu
+                                        id="user-appbar"
+                                        anchorEl={anchorElUser}
+                                        anchorOrigin={{
+                                            vertical: "top",
+                                            horizontal: "right",
+                                        }}
+                                        keepMounted
+                                        transformOrigin={{
+                                            vertical: "top",
+                                            horizontal: "right",
+                                        }}
+                                        open={Boolean(anchorElUser)}
+                                        onClose={handleCloseUserMenu}
+                                    >
+                                        <Link href="/profile" color={"inherit"} underline={"none"}>
+                                            <MenuItem onClick={handleCloseUserMenu}>Profile</MenuItem>
+                                        </Link>
+                                        <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
+                                    </Menu>
+                                </div>
+                            )}
+                        </Grid>
+                    </Grid>
+                </Toolbar>
+            </AppBar>
+        </Box>
+    );
 };

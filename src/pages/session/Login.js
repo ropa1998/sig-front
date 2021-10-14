@@ -43,7 +43,7 @@ const ShowForm = (props) => {
       showMessage("success", `Succesfully logged in`);
 
       setTimeout(() => {
-        history.push(`/profile`);
+        history.push(`/home`);
       }, 1000);
     } catch (e) {
       showMessage("error", e.response?.data?.errors || "Invalid credentials");
@@ -104,9 +104,6 @@ const ShowForm = (props) => {
                         >
                           Login
                         </Button>
-                        <Link href="/reset-password" underline="none">
-                          <Button>Forgot password</Button>
-                        </Link>
                       </Grid>
                     </Grid>
                   </Form>

@@ -18,7 +18,7 @@ import * as yup from "yup";
 import {useHistory} from "react-router-dom";
 
 import {withSnackbar} from "../../components/SnackBarHOC";
-import {getUserInfoById, deleteUser} from "../../utils/Projects";
+import {getUserInfoById, deleteUser} from "../../utils/Server";
 import {useAuth} from "../../contexts/AuthContext";
 
 const validationSchema = yup.object().shape({
@@ -140,7 +140,7 @@ const ModifyUser = (props) => {
                                             <Grid item xs={12}>
                                                 <TextFieldContainer
                                                     id="nickname"
-                                                    label="Nickname"
+                                                    label="Name"
                                                     formikProps={formikProps}
                                                     disabled
                                                 />

@@ -5,7 +5,7 @@ import { Grid, Button, Typography, Container, Box } from "@mui/material";
 import TextFieldContainer from "./TextFieldContainer";
 import { withSnackbar } from "./SnackBarHOC";
 import { useParams } from "react-router-dom";
-import { recoverPassword } from "../utils/Projects";
+import { recoverPassword } from "../utils/Server";
 import { useHistory } from "react-router-dom";
 function RecoverPassword(props) {
   let { token } = useParams();
