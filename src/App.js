@@ -10,7 +10,7 @@ import Login from "./pages/session/Login";
 import {AppBarMenu} from "./components/AppBarMenu";
 import {AuthProvider} from "./contexts/AuthContext";
 import ModifyUser from "./pages/user/ModifyUser";
-import {Register} from "./pages/session/Register";
+import Register from "./pages/session/Register";
 import CreateRack from "./pages/rack/CreateRack";
 import HomePage from "./pages/home/HomePage";
 import PrivateRoute from "./contexts/PrivateRoute";

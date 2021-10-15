@@ -23,17 +23,20 @@ export function AuthProvider({children}) {
     };
 
     const isAdmin = () => {
-        let jwt = localStorage.getItem("token");
-        let decoded = jwt_decode(jwt);
+        if (isUserLoggedIn()) {
+            let jwt = localStorage.getItem("token");
+            let decoded = jwt_decode(jwt);
 
-        console.log('decoded: ' + decoded)
+            console.log('decoded: ' + decoded)
 
-        let roles = decoded.roles
-        console.log(roles)
-        let isAdmin = roles.includes("ROLE_ADMIN")
+            let roles = decoded.roles
+            console.log(roles)
+            let isAdmin = roles.includes("ROLE_ADMIN")
 
-        console.log('Is admin: ' + isAdmin)
-        return isAdmin
+            console.log('Is admin: ' + isAdmin)
+            return isAdmin
+        }
+        return false;
     }
 
     const logOut = () => {
