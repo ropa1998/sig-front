@@ -43,7 +43,7 @@ const CreateRack = (props) => {
         try {
             await submit(values);
 
-            showMessage("success", "Succesfully modified user");
+            showMessage("success", "Succesfully created rack");
 
             setTimeout(() => {
                 history.push(`/racks`);
