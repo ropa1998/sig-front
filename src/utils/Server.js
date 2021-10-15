@@ -1,10 +1,16 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-    baseURL: "http://localhost:8080",
-    ...(localStorage.getItem("token") && {
-        headers: {Authorization: `${localStorage.getItem("token")}`},
-    }),
+    baseURL: "http://localhost:8080"
+});
+
+axiosInstance.interceptors.request.use(function (config) {
+    const token = localStorage.getItem("token");
+    config.headers.Authorization = token;
+    console.log(token)
+    return config;
+}, function (error) {
+    return Promise.reject(error);
 });
 
 // LOGIN

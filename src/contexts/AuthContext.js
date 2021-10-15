@@ -29,7 +29,8 @@ export function AuthProvider({children}) {
         console.log('decoded: ' + decoded)
 
         let roles = decoded.roles
-        let isAdmin = roles.contains("ROLE_ADMIN")
+        console.log(roles)
+        let isAdmin = roles.includes("ROLE_ADMIN")
 
         console.log('Is admin: ' + isAdmin)
         return isAdmin

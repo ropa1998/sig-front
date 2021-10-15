@@ -47,7 +47,6 @@ const ShowForm = (props) => {
       }, 1000);
     } catch (e) {
       showMessage("error", e.response?.data?.errors || "Invalid credentials");
-      //la cuenta no está activa??
     }
   };
   if (isUserLoggedIn()) return <Redirect to={"/profile"} />;

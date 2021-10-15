@@ -14,6 +14,7 @@ import {Register} from "./pages/session/Register";
 import CreateRack from "./pages/rack/CreateRack";
 import HomePage from "./pages/home/HomePage";
 import PrivateRoute from "./contexts/PrivateRoute";
+import PrivateAdminRoute from "./contexts/PrivateAdminRoute";
 import RackList from "./pages/rack/RackList";
 
 function App() {
@@ -42,18 +43,18 @@ function App() {
                             </PrivateRoute>
                             <PrivateRoute path="/racks">
                                 <RackList title="Rack List" subtitle="All the created racks loaded in the system"
-                                            submit={editUserInfo}/>
+                                          submit={editUserInfo}/>
                             </PrivateRoute>
-                            <PrivateRoute path="/add-rack">
+                            <PrivateAdminRoute path="/add-rack">
                                 <CreateRack title="Create Rack" subtitle="" submit={createRack}/>
-                            </PrivateRoute>
-                            <PrivateRoute path="/add-user">
+                            </PrivateAdminRoute>
+                            <PrivateAdminRoute path="/add-user">
                                 <Register
                                     title="Add User"
                                     subtitle="Enter the data to register a user to the Quilmes SIG app"
                                     submit={register}
                                 />
-                            </PrivateRoute>
+                            </PrivateAdminRoute>
                         </Switch>
                     </Router>
                 </Box>
