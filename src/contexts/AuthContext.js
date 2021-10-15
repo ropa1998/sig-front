@@ -1,41 +1,59 @@
-import React, { useContext, useState, createContext, useEffect } from "react";
+import React, {useContext, useState, createContext, useEffect} from "react";
+import jwt_decode from "jwt-decode";
 
 const AuthContext = createContext();
 
 export function useAuth() {
-  return useContext(AuthContext);
+    return useContext(AuthContext);
 }
 
-export function AuthProvider({ children }) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+export function AuthProvider({children}) {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      setIsLoggedIn(true);
+    useEffect(() => {
+        if (localStorage.getItem("token")) {
+            setIsLoggedIn(true);
+        }
+    }, []);
+
+    const getUserInfo = () => isLoggedIn;
+
+    const isUserLoggedIn = () => {
+        return localStorage.getItem("token");
+    };
+
+    const isAdmin = () => {
+        if (isUserLoggedIn()) {
+            let jwt = localStorage.getItem("token");
+            let decoded = jwt_decode(jwt);
+
+            console.log('decoded: ' + decoded)
+
+            let roles = decoded.roles
+            console.log(roles)
+            let isAdmin = roles.includes("ROLE_ADMIN")
+
+            console.log('Is admin: ' + isAdmin)
+            return isAdmin
+        }
+        return false;
     }
-  }, []);
 
-  const getUserInfo = () => isLoggedIn;
+    const logOut = () => {
+        setIsLoggedIn(false);
+        localStorage.removeItem("token");
+    };
 
-  const isUserLoggedIn = () => {
-    return localStorage.getItem("token");
-  };
+    const setUserInfo = (response) => {
+        setIsLoggedIn(true);
+        localStorage.setItem("token", response.headers.token);
+    };
 
-  const logOut = () => {
-    setIsLoggedIn(false);
-    localStorage.removeItem("token");
-  };
-
-  const setUserInfo = (response) => {
-    setIsLoggedIn(true);
-    localStorage.setItem("token", response.headers.token);
-  };
-
-  return (
-    <AuthContext.Provider
-      value={{ isLoggedIn, logOut, getUserInfo, setUserInfo, isUserLoggedIn }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
+    return (
+        <AuthContext.Provider
+            value={{isLoggedIn, logOut, getUserInfo, setUserInfo, isUserLoggedIn, isAdmin}}
+        >
+            {children}
+        </AuthContext.Provider>
+    );
 }

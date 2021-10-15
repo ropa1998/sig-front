@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 
 import { Grid, LinearProgress, Typography } from "@mui/material";
 import { withSnackbar } from "../../components/SnackBarHOC";
-import ProjectDetail from "../../components/ProjectDetail";
-import { getOtherUsersInfoById } from "../../utils/Projects";
+import RackDetail from "../../components/RackDetail";
+import { getOtherUsersInfoById } from "../../utils/Server";
 import { useParams } from "react-router-dom";
 import ChipGroup from "../../components/ChipGroup";
 
@@ -71,7 +71,7 @@ const Profile = (props) => {
             userInfo?.ownedProjects?.map((item, index) => {
               return (
                 <Grid key={index} item xs={4}>
-                  <ProjectDetail project={item} feature={item.featured} />
+                  <RackDetail project={item} feature={item.featured} />
                 </Grid>
               );
             })}
@@ -95,7 +95,7 @@ const Profile = (props) => {
             userInfo?.collaboratedProjects?.map((item, index) => {
               return (
                 <Grid key={index} item xs={4}>
-                  <ProjectDetail project={item} feature={item.featured} />
+                  <RackDetail project={item} feature={item.featured} />
                 </Grid>
               );
             })}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Alert, AlertTitle } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { verifyEmail } from "../utils/Projects";
+import { verifyEmail } from "../utils/Server";
 import { Container, LinearProgress } from "@mui/material";
 
 function VerifyEmail() {

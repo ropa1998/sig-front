@@ -4,13 +4,18 @@ import {Switch, Route, BrowserRouter as Router} from "react-router-dom";
 import {
     login,
     editUserInfo,
-    register
-} from "./utils/Projects";
+    register, createRack
+} from "./utils/Server";
 import Login from "./pages/session/Login";
 import {AppBarMenu} from "./components/AppBarMenu";
 import {AuthProvider} from "./contexts/AuthContext";
 import ModifyUser from "./pages/user/ModifyUser";
-import {Register} from "./pages/session/Register";
+import Register from "./pages/session/Register";
+import CreateRack from "./pages/rack/CreateRack";
+import HomePage from "./pages/home/HomePage";
+import PrivateRoute from "./contexts/PrivateRoute";
+import PrivateAdminRoute from "./contexts/PrivateAdminRoute";
+import RackList from "./pages/rack/RackList";
 
 function App() {
     return (
@@ -28,16 +33,28 @@ function App() {
                                     submit={login}
                                 />
                             </Route>
-                            <Route path="/profile">
+                            <PrivateRoute path="/home">
+                                <HomePage
+                                    title="Home"
+                                />
+                            </PrivateRoute>
+                            <PrivateRoute path="/profile">
                                 <ModifyUser title="Profile" subtitle="" submit={editUserInfo}/>
-                            </Route>
-                            <Route path="/register">
+                            </PrivateRoute>
+                            <PrivateRoute path="/racks">
+                                <RackList title="Rack List" subtitle="All the created racks loaded in the system"
+                                          submit={editUserInfo}/>
+                            </PrivateRoute>
+                            <PrivateAdminRoute path="/add-rack">
+                                <CreateRack title="Create Rack" subtitle="" submit={createRack}/>
+                            </PrivateAdminRoute>
+                            <PrivateAdminRoute path="/add-user">
                                 <Register
-                                    title="Register"
-                                    subtitle="Enter the data to register a user to the A2 app"
+                                    title="Add User"
+                                    subtitle="Enter the data to register a user to the Quilmes SIG app"
                                     submit={register}
                                 />
-                            </Route>
+                            </PrivateAdminRoute>
                         </Switch>
                     </Router>
                 </Box>

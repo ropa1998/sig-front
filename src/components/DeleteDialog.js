@@ -8,7 +8,7 @@ import {
   DialogTitle,
 } from "@mui/material";
 import { withSnackbar } from "./SnackBarHOC";
-import { deleteProjectById } from "../utils/Projects";
+import { deleteProjectById } from "../utils/Server";
 // eslint-disable-next-line no-undef
 
 const DeleteDialog = (props) => {
