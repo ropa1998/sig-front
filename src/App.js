@@ -16,6 +16,7 @@ import HomePage from "./pages/home/HomePage";
 import PrivateRoute from "./contexts/PrivateRoute";
 import PrivateAdminRoute from "./contexts/PrivateAdminRoute";
 import RackList from "./pages/rack/RackList";
+import CreatePallet from "./pages/pallet/CreatePallet";
 
 function App() {
     return (
@@ -55,6 +56,11 @@ function App() {
                                     submit={register}
                                 />
                             </PrivateAdminRoute>
+                            <PrivateRoute path="/add-pallet">
+                                <CreatePallet
+                                    title="Create Pallet"
+                                />
+                            </PrivateRoute>
                         </Switch>
                     </Router>
                 </Box>

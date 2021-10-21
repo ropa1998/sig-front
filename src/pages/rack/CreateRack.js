@@ -21,9 +21,9 @@ import {withSnackbar} from "../../components/SnackBarHOC";
 
 const validationSchema = yup.object().shape({
     name: yup.string().required().nullable().min(3).max(24).label("Name"),
-    x: yup.number().min(1).max(100).label("x"),
-    y: yup.number().min(1).max(100).label("y"),
-    z: yup.number().min(1).max(100).label("z"),
+    x: yup.number().min(1).max(10).label("x"),
+    y: yup.number().min(1).max(10).label("y"),
+    z: yup.number().min(1).max(10).label("z"),
 });
 
 const CreateRack = (props) => {

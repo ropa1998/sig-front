@@ -1,6 +1,6 @@
 import {
     AppBar,
-    Box,
+    Box, Divider,
     Grid,
     IconButton,
     Link,
@@ -70,12 +70,17 @@ export const AppBarMenu = () => {
                                         open={Boolean(anchorElUtility)}
                                         onClose={handleCloseUtilityMenu}
                                     >
+                                        <Link href="/add-pallet" color={"inherit"} underline={"none"}>
+                                            <MenuItem onClick={handleCloseUserMenu}>Add Pallet</MenuItem>
+                                        </Link>
+                                        <Divider/>
                                         <Link href="/add-rack" color={"inherit"} underline={"none"}>
                                             <MenuItem onClick={handleCloseUserMenu}>Add Rack</MenuItem>
                                         </Link>
                                         <Link href="/racks" color={"inherit"} underline={"none"}>
                                             <MenuItem onClick={handleCloseUserMenu}>Rack List</MenuItem>
                                         </Link>
+                                        <Divider/>
                                         <Link href="/add-user" color={"inherit"} underline={"none"}>
                                             <MenuItem onClick={handleCloseUserMenu}>Add User</MenuItem>
                                         </Link>
