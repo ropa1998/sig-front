@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-    // baseURL: "http://localhost:8080"
-    baseURL: "https://sig-back.herokuapp.com/"
+    baseURL: "http://localhost:8080"
+    // baseURL: "https://sig-back.herokuapp.com/"
 });
 
 axiosInstance.interceptors.request.use(function (config) {
@@ -23,6 +23,9 @@ export const register = async (data) => await axiosInstance.post("/user", data);
 export const createRack = async (data) => await axiosInstance.post("/rack", data);
 export const deleteRack = async (data) => await axiosInstance.delete("/rack", data);
 export const getRacks = async (data) => await axiosInstance.get("/rack", data);
+
+export const createPallet = async (data) => await axiosInstance.post("/pallet", data);
+
 
 // EDIT PROJECT BY ID
 export const editProject = async (id, data) =>
@@ -72,6 +75,7 @@ export const getTags = async () => await axiosInstance.get("/project/tags");
 export const getLanguages = async () =>
     await axiosInstance.get("/project/languages");
 export const getUserInfoById = async () => await axiosInstance.get("/user");
+export const getAvailableResources = async () => await axiosInstance.get("/pallet/resources");
 export const editUserInfo = async (data) =>
     await axiosInstance.put("/user", data);
 export const deleteUser = async () => await axiosInstance.delete("/user");

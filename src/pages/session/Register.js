@@ -42,9 +42,7 @@ const ShowForm = (props) => {
     const onSubmit = async (values) => {
         try {
             const response = await submit(values);
-            console.log("Line 46")
             showMessage("success", `Successfully created user`);
-            console.log("Line 48")
             setTimeout(() => {
                 history.push(`/home`);
             }, 1000);
