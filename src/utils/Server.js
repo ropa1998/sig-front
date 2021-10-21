@@ -24,6 +24,9 @@ export const createRack = async (data) => await axiosInstance.post("/rack", data
 export const deleteRack = async (data) => await axiosInstance.delete("/rack", data);
 export const getRacks = async (data) => await axiosInstance.get("/rack", data);
 
+export const createPallet = async (data) => await axiosInstance.post("/pallet", data);
+
+
 // EDIT PROJECT BY ID
 export const editProject = async (id, data) =>
     await axiosInstance.put(`/project/${id}`, data);

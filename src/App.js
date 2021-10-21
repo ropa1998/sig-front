@@ -4,7 +4,7 @@ import {Switch, Route, BrowserRouter as Router} from "react-router-dom";
 import {
     login,
     editUserInfo,
-    register, createRack
+    register, createRack, createPallet
 } from "./utils/Server";
 import Login from "./pages/session/Login";
 import {AppBarMenu} from "./components/AppBarMenu";
@@ -57,9 +57,7 @@ function App() {
                                 />
                             </PrivateAdminRoute>
                             <PrivateRoute path="/add-pallet">
-                                <CreatePallet
-                                    title="Create Pallet"
-                                />
+                                <CreatePallet title="Create Pallet" subtitle="" submit={createPallet}/>
                             </PrivateRoute>
                         </Switch>
                     </Router>

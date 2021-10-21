@@ -18,26 +18,19 @@ import {LocalizationProvider} from "@mui/lab";
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import {getAvailableResources, getUserInfoById} from "../../utils/Server";
-import RackDetail from "../../components/RackDetail";
 
 const validationSchema = yup.object().shape({
-    name: yup.string().required().nullable().min(3).max(24).label("rackId"),
-    x: yup.number().min(1).max(10).label("x"),
-    y: yup.number().min(1).max(10).label("y"),
-    z: yup.number().min(1).max(10).label("z"),
+    codeBar: yup.string().required().nullable().min(3).max(24).label("codeBar"),
 });
 
 const CreatePallet = (props) => {
 
     const initialValues = {
-        rackId: "",
-        x: "",
-        y: "",
-        z: "",
+        positionId: "",
         codeBar: "",
         hop: "",
         expirationDate: "",
-        kilograms: "",
+        originalKilograms: "",
         assistingPeripherals: ""
     };
 
@@ -47,17 +40,26 @@ const CreatePallet = (props) => {
 
     const [hops, setHops] = useState(true);
     const [hop, setHop] = useState(true);
-    const [racks, setRacks] = useState(true);
-    const [rack, setRack] = useState(true);
+    const [positions, setPositions] = useState(true);
+    const [position, setPosition] = useState(true);
     const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState(true);
+    const [date, setDate] = React.useState(new Date());
 
 
     useEffect(() => {
         getAvailableResources()
             .then((res) => {
-                setRacks(res.data["racks"])
+                setPositions(res.data["positions"])
                 setHops(res.data["hops"])
                 setLoading(false);
+            })
+            .catch((e) => {
+                showMessage("error", e.response?.data?.errors || "An error ocurred");
+            });
+        getUserInfoById()
+            .then((res) => {
+                setUser(res.data)
             })
             .catch((e) => {
                 showMessage("error", e.response?.data?.errors || "An error ocurred");
@@ -67,8 +69,15 @@ const CreatePallet = (props) => {
 
     const onSubmit = async (values) => {
         try {
+            console.log(values)
+            values["expirationDate"] = date
+            values["positionId"] = position
+            values["hop"] = hop
+            values["assistingPeripherals"] = []
+            values["userId"] = user["id"]
+            console.log(values)
             await submit(values);
-            showMessage("success", "Succesfully created rack");
+            showMessage("success", "Succesfully created pallet");
             setTimeout(() => {
                 history.push(`/racks`);
             }, 1000);
@@ -81,14 +90,12 @@ const CreatePallet = (props) => {
         setHop(event.target.value);
     };
 
-    const handleRackChange = (event) => {
-        setRack(event.target.value);
+    const handlePositionChange = (event) => {
+        setPosition(event.target.value);
     };
 
-    const [value, setValue] = React.useState(new Date());
-
-    const handleOtherChange = (newValue) => {
-        setValue(newValue);
+    const handleDateChange = (newValue) => {
+        setDate(newValue);
     };
 
     if (loading) return <LinearProgress/>;
@@ -115,16 +122,15 @@ const CreatePallet = (props) => {
                                             <Grid item xs={12}>
                                                 <Box sx={{minWidth: 120}}>
                                                     <FormControl fullWidth>
-                                                        <InputLabel id="demo-simple-select-label">Rack</InputLabel>
+                                                        <InputLabel>Position</InputLabel>
                                                         <Select
-                                                            labelId="demo-simple-select-label"
-                                                            id="demo-simple-select"
-                                                            value={rack}
-                                                            label="Rack"
-                                                            onChange={handleRackChange}
+                                                            id="positionId"
+                                                            value={position}
+                                                            label="Position"
+                                                            onChange={handlePositionChange}
                                                         >
-                                                            {racks.length > 0 &&
-                                                            racks.map((item, index) => {
+                                                            {positions.length > 0 &&
+                                                            positions.map((item, index) => {
                                                                 return (
                                                                     <MenuItem value={item.id}>{item.name}</MenuItem>
                                                                 );
@@ -132,45 +138,6 @@ const CreatePallet = (props) => {
                                                         </Select>
                                                     </FormControl>
                                                 </Box>
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <TextFieldContainer
-                                                    id="x"
-                                                    label="X Length"
-                                                    formikProps={formikProps}
-                                                    type="number"
-                                                    InputProps={{
-                                                        inputProps: {
-                                                            max: 100, min: 1
-                                                        }
-                                                    }}
-                                                />
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <TextFieldContainer
-                                                    id="y"
-                                                    label="Y Length"
-                                                    formikProps={formikProps}
-                                                    type="number"
-                                                    InputProps={{
-                                                        inputProps: {
-                                                            max: 100, min: 1
-                                                        }
-                                                    }}
-                                                />
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <TextFieldContainer
-                                                    id="z"
-                                                    label="Z Length"
-                                                    formikProps={formikProps}
-                                                    type="number"
-                                                    InputProps={{
-                                                        inputProps: {
-                                                            max: 100, min: 1
-                                                        }
-                                                    }}
-                                                />
                                             </Grid>
                                             <Grid item xs={12}>
                                                 <TextFieldContainer
@@ -182,13 +149,13 @@ const CreatePallet = (props) => {
                                             <Grid item xs={12}>
                                                 <Box sx={{minWidth: 120}}>
                                                     <FormControl fullWidth>
-                                                        <InputLabel id="demo-simple-select-label">Hop Type</InputLabel>
+                                                        <InputLabel>Hop Type</InputLabel>
                                                         <Select
-                                                            labelId="demo-simple-select-label"
-                                                            id="demo-simple-select"
+                                                            id="hop"
                                                             value={hop}
                                                             label="Hop Type"
                                                             onChange={handleHopChange}
+                                                            formikProps={formikProps}
                                                         >
                                                             {hops.length > 0 &&
                                                             hops.map((item, index) => {
@@ -205,10 +172,12 @@ const CreatePallet = (props) => {
                                                     <FormControl fullWidth>
                                                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                                                             <DesktopDatePicker
+                                                                id="expirationDate"
                                                                 label="Date desktop"
                                                                 inputFormat="dd/MM/yyyy"
-                                                                value={value}
-                                                                onChange={handleOtherChange}
+                                                                formikProps={formikProps}
+                                                                value={date}
+                                                                onChange={handleDateChange}
                                                                 renderInput={(params) => <TextField {...params} />}
                                                                 minDate={new Date()}
                                                             />
@@ -218,7 +187,7 @@ const CreatePallet = (props) => {
                                             </Grid>
                                             <Grid item xs={12}>
                                                 <TextFieldContainer
-                                                    id="kilograms"
+                                                    id="originalKilograms"
                                                     label="Kilograms"
                                                     formikProps={formikProps}
                                                 />

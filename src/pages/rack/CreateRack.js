@@ -42,9 +42,7 @@ const CreateRack = (props) => {
     const onSubmit = async (values) => {
         try {
             await submit(values);
-
             showMessage("success", "Succesfully created rack");
-
             setTimeout(() => {
                 history.push(`/racks`);
             }, 1000);
@@ -89,7 +87,7 @@ const CreateRack = (props) => {
                                                     type="number"
                                                     InputProps={{
                                                         inputProps: {
-                                                            max: 100, min: 1
+                                                            max: 10, min: 1
                                                         }
                                                     }}
                                                 />
@@ -102,7 +100,7 @@ const CreateRack = (props) => {
                                                     type="number"
                                                     InputProps={{
                                                         inputProps: {
-                                                            max: 100, min: 1
+                                                            max: 10, min: 1
                                                         }
                                                     }}
                                                 />
@@ -115,7 +113,7 @@ const CreateRack = (props) => {
                                                     type="number"
                                                     InputProps={{
                                                         inputProps: {
-                                                            max: 100, min: 1
+                                                            max: 10, min: 1
                                                         }
                                                     }}
                                                 />
