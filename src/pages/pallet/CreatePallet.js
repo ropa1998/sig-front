@@ -20,7 +20,10 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import {getAvailableResources, getPickerData, getUserInfoById} from "../../utils/Server";
 
 const validationSchema = yup.object().shape({
-    codeBar: yup.string().required().nullable().min(3).max(24).label("codeBar"),
+    codeBar: yup.string().required().min(3).max(24).label("codeBar"),
+    positionId: yup.string().required().min(3).label("positionId"),
+    hop: yup.string().required().min(3).label("hop"),
+    originalKilograms: yup.number().required().min(1).max(1000).label("originalKilograms"),
 });
 
 const CreatePallet = (props) => {
@@ -41,13 +44,12 @@ const CreatePallet = (props) => {
         const [hops, setHops] = useState(true);
         const [hop, setHop] = useState(true);
         const [positions, setPositions] = useState(true);
-        const [position, setPosition] = useState(true);
+        const [position, setPosition] = useState("");
         const [loading, setLoading] = useState(true);
         const [user, setUser] = useState(true);
         const [date, setDate] = React.useState(new Date());
         const [codeBar, setCodeBar] = React.useState("");
-        const [kilograms, setKilograms] = React.useState(true);
-
+        const [kilograms, setKilograms] = React.useState("");
 
         useEffect(() => {
             getAvailableResources()
@@ -69,9 +71,9 @@ const CreatePallet = (props) => {
         }, [setLoading]);
 
 
-        const onSubmit = async (values) => {
+        const onSubmit = async () => {
             try {
-                console.log(values)
+                let values = {}
                 values["expirationDate"] = date
                 values["positionId"] = position
                 values["hop"] = hop
@@ -79,12 +81,18 @@ const CreatePallet = (props) => {
                 values["originalKilograms"] = kilograms
                 values["codeBar"] = codeBar
                 values["userId"] = user["id"]
-                console.log(values)
-                await submit(values);
-                showMessage("success", "Succesfully created pallet");
-                setTimeout(() => {
-                    history.push(`/racks`);
-                }, 1000);
+                validationSchema.isValid(values).then(async (valid) => {
+                        if (valid) {
+                            await submit(values);
+                            showMessage("success", "Succesfully created pallet");
+                            setTimeout(() => {
+                                history.push(`/racks`);
+                            }, 1000);
+                        } else {
+                            showMessage("error", "Your input data is not valid. Please check it");
+                        }
+                    }
+                )
             } catch (e) {
                 showMessage("error", e.response?.data || "An error ocurred");
             }
@@ -130,8 +138,6 @@ const CreatePallet = (props) => {
                             <Grid item xs={12}>
                                 <Formik
                                     initialValues={initialValues}
-                                    validationSchema={validationSchema}
-                                    onSubmit={onSubmit}
                                 >
                                     {(formikProps) => (
                                         <Form onSubmit={formikProps.handleSubmit}>
@@ -162,6 +168,7 @@ const CreatePallet = (props) => {
                                                         label="Code Bar"
                                                         formikProps={formikProps}
                                                         value={codeBar}
+                                                        onChange={(e) => setCodeBar(e.target.value)}
                                                     />
                                                 </Grid>
                                                 <Grid item xs={12}>
@@ -209,6 +216,13 @@ const CreatePallet = (props) => {
                                                         label="Kilograms"
                                                         formikProps={formikProps}
                                                         value={kilograms}
+                                                        onChange={(e) => setKilograms(e.target.value)}
+                                                        type="number"
+                                                        InputProps={{
+                                                            inputProps: {
+                                                                max: 1000, min: 1
+                                                            }
+                                                        }}
                                                     />
                                                 </Grid>
                                                 <Grid
@@ -222,6 +236,7 @@ const CreatePallet = (props) => {
                                                             variant="contained"
                                                             color="primary"
                                                             type="submit"
+                                                            onClick={onSubmit}
                                                         >
                                                             {"CREATE"}
                                                         </Button>
