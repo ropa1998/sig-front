@@ -50,12 +50,14 @@ const CreatePallet = (props) => {
         const [date, setDate] = React.useState(new Date());
         const [codeBar, setCodeBar] = React.useState("");
         const [kilograms, setKilograms] = React.useState("");
+        const [recommendedPosition, setRecommendedPosition] = React.useState("");
 
         useEffect(() => {
             getAvailableResources()
                 .then((res) => {
                     setPositions(res.data["positions"])
                     setHops(res.data["hops"])
+                    setRecommendedPosition(res.data["nextRecommended"])
                     setLoading(false);
                 })
                 .catch((e) => {
@@ -154,9 +156,18 @@ const CreatePallet = (props) => {
                                                             >
                                                                 {positions.length > 0 &&
                                                                 positions.map((item, index) => {
-                                                                    return (
-                                                                        <MenuItem value={item.id}>{item.name}</MenuItem>
-                                                                    );
+                                                                    if (recommendedPosition.id === item.id) {
+                                                                        return (
+                                                                            <MenuItem value={item.id}
+                                                                                      style={{fontWeight: 'bold'}}>
+                                                                                {"Recommended: " + item.name}
+                                                                            </MenuItem>
+                                                                        );
+                                                                    } else {
+                                                                        return (
+                                                                            <MenuItem value={item.id}>{item.name}</MenuItem>
+                                                                        );
+                                                                    }
                                                                 })}
                                                             </Select>
                                                         </FormControl>
@@ -198,7 +209,7 @@ const CreatePallet = (props) => {
                                                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                                                 <DesktopDatePicker
                                                                     id="expirationDate"
-                                                                    label="Date desktop"
+                                                                    label="Expiration Date"
                                                                     inputFormat="dd/MM/yyyy"
                                                                     formikProps={formikProps}
                                                                     value={date}
