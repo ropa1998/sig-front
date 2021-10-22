@@ -19,7 +19,6 @@ import {getActivePallets, getPallets, getPickerData, getScaleData, getUserInfoBy
 const validationSchema = yup.object().shape({
     palletId: yup.string().required().label("palletId"),
     userId: yup.string().required().label("userId"),
-    amount: yup.number().required().min(-1000).max(1000).label("amount"),
     isExtraordinary: yup.bool().required().label("isExtraordinary"),
 });
 
@@ -65,17 +64,20 @@ const CreateTransaction = (props) => {
         const onSubmit = async () => {
             try {
                 let values = {}
-                values["palletId"] = pallet
+                values["palletId"] = pallet.id
                 values["userId"] = user.id
                 values["amount"] = kilograms
                 values["isExtraordinary"] = checked
                 validationSchema.isValid(values).then(async (valid) => {
+                        console.log(pallet.remainingKilograms >= kilograms)
                         if (valid) {
-                            await submit(values)
-                            showMessage("success", "Successfully created transaction");
-                            setTimeout(() => {
-                                history.push(`/transactions`);
-                            }, 1000);
+                            if ((kilograms < 0 && pallet.remainingKilograms >= kilograms * -1) || kilograms >= 0) {
+                                await submit(values)
+                                showMessage("success", "Successfully created transaction");
+                                setTimeout(() => {
+                                    history.push(`/transactions`);
+                                }, 1000);
+                            }
                         } else {
                             showMessage("error", "Your input data is not valid. Please check it");
                         }
@@ -137,7 +139,7 @@ const CreateTransaction = (props) => {
                                                                 {pallets.length > 0 &&
                                                                 pallets.map((item, index) => {
                                                                     return (
-                                                                        <MenuItem value={item.id}>{item.name}</MenuItem>
+                                                                        <MenuItem value={item}>{item.name}</MenuItem>
                                                                     );
                                                                 })}
                                                             </Select>
@@ -154,7 +156,7 @@ const CreateTransaction = (props) => {
                                                         type="number"
                                                         InputProps={{
                                                             inputProps: {
-                                                                max: 1000, min: -1000
+                                                                max: 1000, min: -(pallet.remainingKilograms)
                                                             }
                                                         }}
                                                     />
