@@ -17,6 +17,7 @@ import PrivateRoute from "./contexts/PrivateRoute";
 import PrivateAdminRoute from "./contexts/PrivateAdminRoute";
 import RackList from "./pages/rack/RackList";
 import CreatePallet from "./pages/pallet/CreatePallet";
+import PalletList from "./pages/pallet/PalletList";
 
 function App() {
     return (
@@ -43,8 +44,11 @@ function App() {
                                 <ModifyUser title="Profile" subtitle="" submit={editUserInfo}/>
                             </PrivateRoute>
                             <PrivateRoute path="/racks">
-                                <RackList title="Rack List" subtitle="All the created racks loaded in the system"
-                                          submit={editUserInfo}/>
+                                <RackList title="Rack List" subtitle="All the created racks loaded in the system"/>
+                            </PrivateRoute>
+                            <PrivateRoute path="/pallets">
+                                <PalletList title="Pallet List"
+                                            subtitle="All the created pallets loaded in the system"/>
                             </PrivateRoute>
                             <PrivateAdminRoute path="/add-rack">
                                 <CreateRack title="Create Rack" subtitle="" submit={createRack}/>

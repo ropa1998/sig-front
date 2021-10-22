@@ -73,6 +73,9 @@ export const AppBarMenu = () => {
                                         <Link href="/add-pallet" color={"inherit"} underline={"none"}>
                                             <MenuItem onClick={handleCloseUserMenu}>Add Pallet</MenuItem>
                                         </Link>
+                                        <Link href="/pallets" color={"inherit"} underline={"none"}>
+                                            <MenuItem onClick={handleCloseUserMenu}>Pallet List</MenuItem>
+                                        </Link>
                                         <Divider/>
                                         <Link href="/add-rack" color={"inherit"} underline={"none"}>
                                             <MenuItem onClick={handleCloseUserMenu}>Add Rack</MenuItem>
