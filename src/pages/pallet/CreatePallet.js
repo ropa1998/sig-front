@@ -88,7 +88,7 @@ const CreatePallet = (props) => {
                             await submit(values);
                             showMessage("success", "Succesfully created pallet");
                             setTimeout(() => {
-                                history.push(`/racks`);
+                                history.push(`/pallets`);
                             }, 1000);
                         } else {
                             showMessage("error", "Your input data is not valid. Please check it");

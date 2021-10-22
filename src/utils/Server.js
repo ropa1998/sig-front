@@ -30,6 +30,7 @@ export const deleteRack = async (data) => await backendAxiosInstance.delete("/ra
 export const getRacks = async (data) => await backendAxiosInstance.get("/rack", data);
 
 export const createPallet = async (data) => await backendAxiosInstance.post("/pallet", data);
+export const getPallets = async (data) => await backendAxiosInstance.get("/pallet", data);
 
 export const getPickerData = async () => await pickerAxiosInstance.get("/picker");
 
