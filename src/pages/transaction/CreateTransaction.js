@@ -14,12 +14,12 @@ import * as yup from "yup";
 import {useHistory} from "react-router-dom";
 
 import {withSnackbar} from "../../components/SnackBarHOC";
-import {getPallets, getPickerData, getScaleData, getUserInfoById} from "../../utils/Server";
+import {getActivePallets, getPallets, getPickerData, getScaleData, getUserInfoById} from "../../utils/Server";
 
 const validationSchema = yup.object().shape({
     palletId: yup.string().required().label("palletId"),
     userId: yup.string().required().label("userId"),
-    amount: yup.number().required().min(1).max(1000).label("amount"),
+    amount: yup.number().required().min(-1000).max(1000).label("amount"),
     isExtraordinary: yup.bool().required().label("isExtraordinary"),
 });
 
@@ -44,7 +44,7 @@ const CreateTransaction = (props) => {
         const [checked, setChecked] = React.useState(false);
 
         useEffect(() => {
-            getPallets()
+            getActivePallets()
                 .then((res) => {
                     setPallets(res.data)
                     setLoading(false);
@@ -69,10 +69,9 @@ const CreateTransaction = (props) => {
                 values["userId"] = user.id
                 values["amount"] = kilograms
                 values["isExtraordinary"] = checked
-                console.log(values)
                 validationSchema.isValid(values).then(async (valid) => {
                         if (valid) {
-                            await submit(values);
+                            await submit(values)
                             showMessage("success", "Successfully created transaction");
                             setTimeout(() => {
                                 history.push(`/transactions`);
@@ -86,7 +85,6 @@ const CreateTransaction = (props) => {
                 showMessage("error", e.response?.data || "An error ocurred");
             }
         };
-
 
         const handlePalletChange = (event) => {
             setPallet(event.target.value);
@@ -156,7 +154,7 @@ const CreateTransaction = (props) => {
                                                         type="number"
                                                         InputProps={{
                                                             inputProps: {
-                                                                max: 1000, min: 1
+                                                                max: 1000, min: -1000
                                                             }
                                                         }}
                                                     />

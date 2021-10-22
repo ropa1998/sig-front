@@ -32,6 +32,7 @@ export const getRacks = async (data) => await backendAxiosInstance.get("/rack", 
 export const createPallet = async (data) => await backendAxiosInstance.post("/pallet", data);
 export const createTransaction = async (data) => await backendAxiosInstance.put("/pallet", data);
 export const getPallets = async () => await backendAxiosInstance.get("/pallet");
+export const getActivePallets = async () => await backendAxiosInstance.get("/pallet/active");
 
 export const getTransactions = async () => await backendAxiosInstance.get("/transaction");
 

@@ -51,10 +51,11 @@ function PalletList(props) {
                             </TableCell>
                             <TableCell align="right">{row.codeBar}</TableCell>
                             <TableCell align="right">{row.hop}</TableCell>
-                            <TableCell align="right">{new Date(row.expirationDate).toLocaleDateString('es-AR')}</TableCell>
+                            <TableCell
+                                align="right">{new Date(row.expirationDate).toLocaleDateString('es-AR')}</TableCell>
                             <TableCell align="right">{row.originalKilograms}</TableCell>
                             <TableCell align="right">{row.remainingKilograms}</TableCell>
-                            <TableCell align="right">{row.position.name}</TableCell>
+                            <TableCell align="right">{row.position?.name || "NOT ACTIVE"}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
