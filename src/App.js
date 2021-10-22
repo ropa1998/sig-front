@@ -4,7 +4,7 @@ import {Switch, Route, BrowserRouter as Router} from "react-router-dom";
 import {
     login,
     editUserInfo,
-    register, createRack, createPallet
+    register, createRack, createPallet, createTransaction
 } from "./utils/Server";
 import Login from "./pages/session/Login";
 import {AppBarMenu} from "./components/AppBarMenu";
@@ -18,6 +18,8 @@ import PrivateAdminRoute from "./contexts/PrivateAdminRoute";
 import RackList from "./pages/rack/RackList";
 import CreatePallet from "./pages/pallet/CreatePallet";
 import PalletList from "./pages/pallet/PalletList";
+import CreateTransaction from "./pages/transaction/CreateTransaction";
+import TransactionList from "./pages/transaction/TransactionList";
 
 function App() {
     return (
@@ -62,6 +64,12 @@ function App() {
                             </PrivateAdminRoute>
                             <PrivateRoute path="/add-pallet">
                                 <CreatePallet title="Create Pallet" subtitle="" submit={createPallet}/>
+                            </PrivateRoute>
+                            <PrivateRoute path="/add-transaction">
+                                <CreateTransaction title="Create Transaction" subtitle="" submit={createTransaction}/>
+                            </PrivateRoute>
+                            <PrivateRoute path="/transactions">
+                                <TransactionList title="Transaction List" subtitle="All the created transactions in the system"/>
                             </PrivateRoute>
                         </Switch>
                     </Router>
