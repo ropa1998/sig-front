@@ -32,9 +32,9 @@ function RackList(props) {
                 <TableHead>
                     <TableRow>
                         <TableCell>Name</TableCell>
-                        <TableCell align="right">X</TableCell>
-                        <TableCell align="right">Y</TableCell>
-                        <TableCell align="right">Z</TableCell>
+                        <TableCell align="center">X</TableCell>
+                        <TableCell align="center">Y</TableCell>
+                        <TableCell align="center">Z</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>

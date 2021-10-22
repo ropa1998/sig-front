@@ -31,13 +31,13 @@ function PalletList(props) {
             <Table sx={{minWidth: 650}} aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Id</TableCell>
-                        <TableCell align="right">Code Bar</TableCell>
-                        <TableCell align="right">Hop</TableCell>
-                        <TableCell align="right">Expiration Date</TableCell>
-                        <TableCell align="right">Original Kilograms</TableCell>
-                        <TableCell align="right">Remaining Kilograms</TableCell>
-                        <TableCell align="right">Position</TableCell>
+                        <TableCell>ID</TableCell>
+                        <TableCell align="center">Code Bar</TableCell>
+                        <TableCell align="center">Hop</TableCell>
+                        <TableCell align="center">Expiration Date</TableCell>
+                        <TableCell align="center">Original Kilograms</TableCell>
+                        <TableCell align="center">Remaining Kilograms</TableCell>
+                        <TableCell align="center">Position</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -51,10 +51,11 @@ function PalletList(props) {
                             </TableCell>
                             <TableCell align="right">{row.codeBar}</TableCell>
                             <TableCell align="right">{row.hop}</TableCell>
-                            <TableCell align="right">{new Date(row.expirationDate).toLocaleDateString('es-AR')}</TableCell>
+                            <TableCell
+                                align="right">{new Date(row.expirationDate).toLocaleDateString('es-AR')}</TableCell>
                             <TableCell align="right">{row.originalKilograms}</TableCell>
                             <TableCell align="right">{row.remainingKilograms}</TableCell>
-                            <TableCell align="right">{row.position.name}</TableCell>
+                            <TableCell align="right">{row.position?.name || "NOT ACTIVE"}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

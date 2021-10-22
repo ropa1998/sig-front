@@ -77,6 +77,13 @@ export const AppBarMenu = () => {
                                             <MenuItem onClick={handleCloseUserMenu}>Pallet List</MenuItem>
                                         </Link>
                                         <Divider/>
+                                        <Link href="/add-transaction" color={"inherit"} underline={"none"}>
+                                            <MenuItem onClick={handleCloseUserMenu}>Create Transaction</MenuItem>
+                                        </Link>
+                                        <Link href="/transactions" color={"inherit"} underline={"none"}>
+                                            <MenuItem onClick={handleCloseUserMenu}>Transaction List</MenuItem>
+                                        </Link>
+                                        <Divider/>
                                         <Link href="/add-rack" color={"inherit"} underline={"none"}>
                                             <MenuItem onClick={handleCloseUserMenu}>Add Rack</MenuItem>
                                         </Link>

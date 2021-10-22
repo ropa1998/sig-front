@@ -1,13 +1,13 @@
 import axios from "axios";
 
 const backendAxiosInstance = axios.create({
-    // baseURL: "http://localhost:8080"
-    baseURL: "https://sig-back.herokuapp.com/"
+    baseURL: "http://localhost:8080"
+    // baseURL: "https://sig-back.herokuapp.com/"
 });
 
 const pickerAxiosInstance = axios.create({
-    // baseURL: "http://localhost:8081"
-    baseURL: "https://sig-utils.herokuapp.com/"
+    baseURL: "http://localhost:8081"
+    // baseURL: "https://sig-utils.herokuapp.com/"
 });
 
 backendAxiosInstance.interceptors.request.use(function (config) {
@@ -30,9 +30,14 @@ export const deleteRack = async (data) => await backendAxiosInstance.delete("/ra
 export const getRacks = async (data) => await backendAxiosInstance.get("/rack", data);
 
 export const createPallet = async (data) => await backendAxiosInstance.post("/pallet", data);
-export const getPallets = async (data) => await backendAxiosInstance.get("/pallet", data);
+export const createTransaction = async (data) => await backendAxiosInstance.put("/pallet", data);
+export const getPallets = async () => await backendAxiosInstance.get("/pallet");
+export const getActivePallets = async () => await backendAxiosInstance.get("/pallet/active");
+
+export const getTransactions = async () => await backendAxiosInstance.get("/transaction");
 
 export const getPickerData = async () => await pickerAxiosInstance.get("/picker");
+export const getScaleData = async () => await pickerAxiosInstance.get("/scale");
 
 
 // EDIT PROJECT BY ID
