@@ -46,9 +46,9 @@ function RackList(props) {
                             <TableCell component="th" scope="row">
                                 {row.name}
                             </TableCell>
-                            <TableCell align="right">{row.x}</TableCell>
-                            <TableCell align="right">{row.y}</TableCell>
-                            <TableCell align="right">{row.z}</TableCell>
+                            <TableCell align="center">{row.x}</TableCell>
+                            <TableCell align="center">{row.y}</TableCell>
+                            <TableCell align="center">{row.z}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
