@@ -27,7 +27,7 @@ function PalletList(props) {
     }, [pallets]);
 
     return (
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} width={"max-content"}>
             <Table sx={{minWidth: 650}} aria-label="simple table">
                 <TableHead>
                     <TableRow>
@@ -38,6 +38,7 @@ function PalletList(props) {
                         <TableCell align="center">Original Kilograms</TableCell>
                         <TableCell align="center">Remaining Kilograms</TableCell>
                         <TableCell align="center">Position</TableCell>
+                        <TableCell align="center">Assisting Peripherals</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -56,6 +57,8 @@ function PalletList(props) {
                             <TableCell align="center">{row.originalKilograms}</TableCell>
                             <TableCell align="center">{row.remainingKilograms}</TableCell>
                             <TableCell align="center">{row.position?.name || "NOT ACTIVE"}</TableCell>
+                            <TableCell
+                                align="center">{row.assistingPeripherals === "" ? "NO ASSISTANT" : row.assistingPeripherals}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

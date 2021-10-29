@@ -52,7 +52,7 @@ const CreatePallet = (props) => {
         // const [codeBar, setCodeBar] = React.useState("");
         const [kilograms, setKilograms] = React.useState("");
         const [recommendedPosition, setRecommendedPosition] = React.useState("");
-        // const [assistingPeripherals, setAssistingPeripherals] = React.useState("");
+        const [assistingPeripherals, setAssistingPeripherals] = React.useState("");
 
         useEffect(() => {
             getAvailableResources()
@@ -81,7 +81,7 @@ const CreatePallet = (props) => {
                 values["expirationDate"] = date
                 values["positionId"] = position
                 values["hop"] = hop
-                values["assistingPeripherals"] = []
+                values["assistingPeripherals"] = assistingPeripherals
                 values["originalKilograms"] = kilograms
                 // values["codeBar"] = codeBar
                 values["userId"] = user["id"]
@@ -115,12 +115,13 @@ const CreatePallet = (props) => {
             setDate(newValue);
         };
 
-        const lookForPickerDate = () => {
+        const lookForPickerData = () => {
             getPickerData()
                 .then((res) => {
                     setHop(res.data["hop"])
                     setDate(res.data["expirationDate"])
                     setKilograms(res.data["originalKilograms"])
+                    setAssistingPeripherals("PICKER")
                     // setCodeBar(res.data["codeBar"])
                 })
                 .catch((e) => {
@@ -271,7 +272,7 @@ const CreatePallet = (props) => {
                                                             variant="contained"
                                                             color="secondary"
                                                             type="submit"
-                                                            onClick={lookForPickerDate}
+                                                            onClick={lookForPickerData}
                                                         >
                                                             {"READ PICKER"}
                                                         </Button>
