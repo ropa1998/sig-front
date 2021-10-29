@@ -32,7 +32,7 @@ function PalletList(props) {
                 <TableHead>
                     <TableRow>
                         <TableCell>ID</TableCell>
-                        <TableCell align="center">Code Bar</TableCell>
+                        <TableCell align="center">Barcode</TableCell>
                         <TableCell align="center">Hop</TableCell>
                         <TableCell align="center">Expiration Date</TableCell>
                         <TableCell align="center">Original Kilograms</TableCell>
