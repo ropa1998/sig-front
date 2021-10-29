@@ -1,6 +1,6 @@
 import React from "react";
 import {Container, Box} from "@mui/material";
-import {Switch, Route, BrowserRouter as Router} from "react-router-dom";
+import {Switch, Route, BrowserRouter as Router, Redirect} from "react-router-dom";
 import {
     login,
     editUserInfo,
@@ -69,7 +69,8 @@ function App() {
                                 <CreateTransaction title="Create Transaction" subtitle="" submit={createTransaction}/>
                             </PrivateRoute>
                             <PrivateRoute path="/transactions">
-                                <TransactionList title="Transaction List" subtitle="All the created transactions in the system"/>
+                                <TransactionList title="Transaction List"
+                                                 subtitle="All the created transactions in the system"/>
                             </PrivateRoute>
                         </Switch>
                     </Router>
