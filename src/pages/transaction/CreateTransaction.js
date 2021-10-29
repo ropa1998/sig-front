@@ -62,16 +62,26 @@ const CreateTransaction = (props) => {
                 });
         }, [setLoading]);
 
+        const getAmount = () => {
+            console.log(`isExtraction ${isExtraction}`)
+            console.log(`isExtraction === true ${isExtraction === true}`)
+            if (isExtraction === true) {
+                return kilograms * -1
+            } else {
+                return kilograms
+            }
+        }
 
         const onSubmit = async () => {
             try {
                 let values = {}
                 values["palletId"] = pallet.id
                 values["userId"] = user.id
-                values["amount"] = kilograms * (isExtraction ? -1 : 1)
+                values["amount"] = getAmount()
                 values["isExtraordinary"] = checked
                 validationSchema.isValid(values).then(async (valid) => {
-                        const kilogramsCondition = (values["amount"] < 0 && pallet.remainingKilograms >= values["amount"] * -1) || values["amount"] >= 0;
+                        console.log(values["amount"])
+                        const kilogramsCondition = (values["amount"] < 0 && pallet.remainingKilograms + values["amount"] >= 0) || values["amount"] >= 0;
                         if (valid) {
                             if (kilogramsCondition) {
                                 await submit(values)
@@ -104,8 +114,9 @@ const CreateTransaction = (props) => {
 
         const handleIsExtractionChange = (event) => {
             let value = event.target.value;
-            console.log(value)
+            console.log(`Value ${value}`)
             setIsExtraction(value);
+            console.log(`isExtraction ${isExtraction}`)
             if (value) {
                 setMax(pallet.remainingKilograms)
             } else {
