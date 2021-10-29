@@ -49,13 +49,13 @@ function PalletList(props) {
                             <TableCell component="th" scope="row">
                                 {row.id}
                             </TableCell>
-                            <TableCell align="right">{row.codeBar}</TableCell>
-                            <TableCell align="right">{row.hop}</TableCell>
+                            <TableCell align="center">{row.codeBar}</TableCell>
+                            <TableCell align="center">{row.hop}</TableCell>
                             <TableCell
-                                align="right">{new Date(row.expirationDate).toLocaleDateString('es-AR')}</TableCell>
-                            <TableCell align="right">{row.originalKilograms}</TableCell>
-                            <TableCell align="right">{row.remainingKilograms}</TableCell>
-                            <TableCell align="right">{row.position?.name || "NOT ACTIVE"}</TableCell>
+                                align="center">{new Date(row.expirationDate).toLocaleDateString('es-AR')}</TableCell>
+                            <TableCell align="center">{row.originalKilograms}</TableCell>
+                            <TableCell align="center">{row.remainingKilograms}</TableCell>
+                            <TableCell align="center">{row.position?.name || "NOT ACTIVE"}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
