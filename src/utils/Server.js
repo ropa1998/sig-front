@@ -1,13 +1,13 @@
 import axios from "axios";
 
 const backendAxiosInstance = axios.create({
-    baseURL: "http://localhost:8080"
-    // baseURL: "https://sig-back.herokuapp.com/"
+    // baseURL: "http://localhost:8080"
+    baseURL: "https://sig-back.herokuapp.com/"
 });
 
 const pickerAxiosInstance = axios.create({
-    baseURL: "http://localhost:8081"
-    // baseURL: "https://sig-utils.herokuapp.com/"
+    // baseURL: "http://localhost:8081"
+    baseURL: "https://sig-utils.herokuapp.com/"
 });
 
 backendAxiosInstance.interceptors.request.use(function (config) {
