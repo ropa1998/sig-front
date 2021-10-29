@@ -37,9 +37,6 @@ function App() {
                                     submit={login}
                                 />
                             </Route>
-                            <Route path="/">
-                                <Redirect to='/login'/>;
-                            </Route>
                             <PrivateRoute path="/home">
                                 <HomePage
                                     title="Home"
