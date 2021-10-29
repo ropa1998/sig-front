@@ -4,7 +4,7 @@ import {
     Container,
     FormControl, FormControlLabel,
     Grid, InputLabel,
-    LinearProgress, MenuItem, Select,
+    LinearProgress, MenuItem, Radio, RadioGroup, Select,
     Typography,
 } from "@mui/material";
 import React, {useEffect, useState} from "react";
@@ -36,11 +36,13 @@ const CreateTransaction = (props) => {
         const history = useHistory();
 
         const [pallets, setPallets] = useState([]);
-        const [pallet, setPallet] = useState(true);
+        const [pallet, setPallet] = useState();
         const [loading, setLoading] = useState(true);
         const [kilograms, setKilograms] = React.useState("");
         const [user, setUser] = React.useState("");
         const [checked, setChecked] = React.useState(false);
+        const [isExtraction, setIsExtraction] = React.useState(true);
+        const [max, setMax] = React.useState()
 
         useEffect(() => {
             getActivePallets()
@@ -66,18 +68,22 @@ const CreateTransaction = (props) => {
                 let values = {}
                 values["palletId"] = pallet.id
                 values["userId"] = user.id
-                values["amount"] = kilograms
+                values["amount"] = kilograms * (isExtraction ? -1 : 1)
                 values["isExtraordinary"] = checked
                 validationSchema.isValid(values).then(async (valid) => {
-                        console.log(pallet.remainingKilograms >= kilograms)
+                        const kilogramsCondition = (values["amount"] < 0 && pallet.remainingKilograms >= values["amount"] * -1) || values["amount"] >= 0;
                         if (valid) {
-                            if ((kilograms < 0 && pallet.remainingKilograms >= kilograms * -1) || kilograms >= 0) {
+                            if (kilogramsCondition) {
                                 await submit(values)
                                 showMessage("success", "Successfully created transaction");
                                 setTimeout(() => {
                                     history.push(`/transactions`);
                                 }, 1000);
+                            } else {
+                                const message = `You cannot remove ${kilograms} from this pallet. The limit is ${pallet.remainingKilograms}`;
+                                showMessage("error", message);
                             }
+
                         } else {
                             showMessage("error", "Your input data is not valid. Please check it");
                         }
@@ -94,6 +100,17 @@ const CreateTransaction = (props) => {
 
         const handledCheckedChange = (event) => {
             setChecked(event.target.checked);
+        };
+
+        const handleIsExtractionChange = (event) => {
+            let value = event.target.value;
+            console.log(value)
+            setIsExtraction(value);
+            if (value) {
+                setMax(pallet.remainingKilograms)
+            } else {
+                setMax(1000)
+            }
         };
 
         const lookForScaleData = () => {
@@ -146,6 +163,28 @@ const CreateTransaction = (props) => {
                                                         </FormControl>
                                                     </Box>
                                                 </Grid>
+                                                {pallet &&
+                                                <Grid item xs={12}>
+                                                    <Typography variant="h7">
+                                                        Pallet current kilograms: {pallet.remainingKilograms}
+                                                    </Typography>
+                                                </Grid>
+                                                }
+                                                <Grid item></Grid>
+                                                <Grid item xs={12}>
+                                                    <RadioGroup
+                                                        aria-label="transaction-type"
+                                                        name="controlled-radio-buttons-group"
+                                                        value={isExtraction}
+                                                        onChange={handleIsExtractionChange}
+                                                        row
+                                                    >
+                                                        <FormControlLabel value={true} control={<Radio/>}
+                                                                          label="Extraction"/>
+                                                        <FormControlLabel value={false} control={<Radio/>}
+                                                                          label="Addition"/>
+                                                    </RadioGroup>
+                                                </Grid>
                                                 <Grid item xs={12}>
                                                     <TextFieldContainer
                                                         id="originalKilograms"
@@ -154,12 +193,7 @@ const CreateTransaction = (props) => {
                                                         value={kilograms}
                                                         onChange={(e) => setKilograms(e.target.value)}
                                                         type="number"
-                                                        InputProps={{
-                                                            inputProps: {
-                                                                max: 1000, min: -(pallet.remainingKilograms)
-                                                            }
-                                                        }}
-                                                    />
+                                                        InputProps={{inputProps: {min: 0, max: 1000}}}/>
                                                 </Grid>
                                                 <Grid item xs={12}>
                                                     <FormControlLabel control={<Checkbox
