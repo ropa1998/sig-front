@@ -1,4 +1,5 @@
 import {
+    Autocomplete,
     Box,
     Button,
     Container,
@@ -20,7 +21,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import {getAvailableResources, getPickerData, getUserInfoById} from "../../utils/Server";
 
 const validationSchema = yup.object().shape({
-    codeBar: yup.string().required().min(3).max(24).label("codeBar"),
+    // codeBar: yup.string().required().min(3).max(24).label("codeBar"),
     positionId: yup.string().required().min(3).label("positionId"),
     hop: yup.string().required().min(3).label("hop"),
     originalKilograms: yup.number().required().min(1).max(1000).label("originalKilograms"),
@@ -30,7 +31,7 @@ const CreatePallet = (props) => {
 
         const initialValues = {
             positionId: "",
-            codeBar: "",
+            // codeBar: "",
             hop: "",
             expirationDate: "",
             originalKilograms: "",
@@ -41,16 +42,17 @@ const CreatePallet = (props) => {
 
         const history = useHistory();
 
-        const [hops, setHops] = useState(true);
-        const [hop, setHop] = useState(true);
+        const [hops, setHops] = useState();
+        const [hop, setHop] = useState("");
         const [positions, setPositions] = useState(true);
         const [position, setPosition] = useState("");
         const [loading, setLoading] = useState(true);
         const [user, setUser] = useState(true);
         const [date, setDate] = React.useState(new Date());
-        const [codeBar, setCodeBar] = React.useState("");
+        // const [codeBar, setCodeBar] = React.useState("");
         const [kilograms, setKilograms] = React.useState("");
         const [recommendedPosition, setRecommendedPosition] = React.useState("");
+        // const [assistingPeripherals, setAssistingPeripherals] = React.useState("");
 
         useEffect(() => {
             getAvailableResources()
@@ -81,7 +83,7 @@ const CreatePallet = (props) => {
                 values["hop"] = hop
                 values["assistingPeripherals"] = []
                 values["originalKilograms"] = kilograms
-                values["codeBar"] = codeBar
+                // values["codeBar"] = codeBar
                 values["userId"] = user["id"]
                 validationSchema.isValid(values).then(async (valid) => {
                         if (valid) {
@@ -101,6 +103,7 @@ const CreatePallet = (props) => {
         };
 
         const handleHopChange = (event) => {
+            console.log(event.target.value)
             setHop(event.target.value);
         };
 
@@ -118,7 +121,7 @@ const CreatePallet = (props) => {
                     setHop(res.data["hop"])
                     setDate(res.data["expirationDate"])
                     setKilograms(res.data["originalKilograms"])
-                    setCodeBar(res.data["codeBar"])
+                    // setCodeBar(res.data["codeBar"])
                 })
                 .catch((e) => {
                     showMessage("error", e.response?.data?.errors || "An error ocurred");
@@ -173,36 +176,47 @@ const CreatePallet = (props) => {
                                                         </FormControl>
                                                     </Box>
                                                 </Grid>
+                                                {/*<Grid item xs={12}>*/}
+                                                {/*    <TextFieldContainer*/}
+                                                {/*        id="codeBar"*/}
+                                                {/*        label="Code Bar"*/}
+                                                {/*        formikProps={formikProps}*/}
+                                                {/*        value={codeBar}*/}
+                                                {/*        onChange={(e) => setCodeBar(e.target.value)}*/}
+                                                {/*    />*/}
+                                                {/*</Grid>*/}
                                                 <Grid item xs={12}>
-                                                    <TextFieldContainer
-                                                        id="codeBar"
-                                                        label="Code Bar"
-                                                        formikProps={formikProps}
-                                                        value={codeBar}
-                                                        onChange={(e) => setCodeBar(e.target.value)}
+                                                    <Autocomplete
+                                                        value={hop}
+                                                        onChange={(event, newValue) => {
+                                                            setHop(newValue);
+                                                        }}
+                                                        id="controllable-states-demo"
+                                                        options={hops}
+                                                        renderInput={(params) => <TextField {...params} label="Hop Type"/>}
                                                     />
                                                 </Grid>
-                                                <Grid item xs={12}>
-                                                    <Box sx={{minWidth: 120}}>
-                                                        <FormControl fullWidth>
-                                                            <InputLabel>Hop Type</InputLabel>
-                                                            <Select
-                                                                id="hop"
-                                                                value={hop}
-                                                                label="Hop Type"
-                                                                onChange={handleHopChange}
-                                                                formikProps={formikProps}
-                                                            >
-                                                                {hops.length > 0 &&
-                                                                hops.map((item, index) => {
-                                                                    return (
-                                                                        <MenuItem value={item}>{item}</MenuItem>
-                                                                    );
-                                                                })}
-                                                            </Select>
-                                                        </FormControl>
-                                                    </Box>
-                                                </Grid>
+                                                {/*<Grid item xs={12}>*/}
+                                                {/*    <Box sx={{minWidth: 120}}>*/}
+                                                {/*        <FormControl fullWidth>*/}
+                                                {/*            <InputLabel>Hop Type</InputLabel>*/}
+                                                {/*            <Select*/}
+                                                {/*                id="hop"*/}
+                                                {/*                value={hop}*/}
+                                                {/*                label="Hop Type"*/}
+                                                {/*                onChange={handleHopChange}*/}
+                                                {/*                formikProps={formikProps}*/}
+                                                {/*            >*/}
+                                                {/*                {hops.length > 0 &&*/}
+                                                {/*                hops.map((item, index) => {*/}
+                                                {/*                    return (*/}
+                                                {/*                        <MenuItem value={item}>{item}</MenuItem>*/}
+                                                {/*                    );*/}
+                                                {/*                })}*/}
+                                                {/*            </Select>*/}
+                                                {/*        </FormControl>*/}
+                                                {/*    </Box>*/}
+                                                {/*</Grid>*/}
                                                 <Grid item xs={12}>
                                                     <Box sx={{minWidth: 120}}>
                                                         <FormControl fullWidth>

@@ -20,10 +20,10 @@ import {useHistory} from "react-router-dom";
 import {withSnackbar} from "../../components/SnackBarHOC";
 
 const validationSchema = yup.object().shape({
-    name: yup.string().required().nullable().min(3).max(24).label("Name"),
-    x: yup.number().min(1).max(10).label("x"),
-    y: yup.number().min(1).max(10).label("y"),
-    z: yup.number().min(1).max(10).label("z"),
+    name: yup.string().required().min(3).max(24).label("Name"),
+    x: yup.number().min(1).max(10).label("x").required(),
+    y: yup.number().min(1).max(10).label("y").required(),
+    z: yup.number().min(1).max(10).label("z").required(),
 });
 
 const CreateRack = (props) => {
