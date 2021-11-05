@@ -12,8 +12,16 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import TextFieldContainer from "../../components/TextFieldContainer";
 import {useHistory} from "react-router-dom";
+import * as yup from "yup";
+
+const validationSchema = yup.object().shape({
+    // codeBar: yup.string().required().min(3).max(24).label("codeBar"),
+    id: yup.string().required().min(3).label("id"),
+    limit: yup.number().required().min(1).max(1000).label("limit"),
+});
 
 function SetCriticalValues(props) {
+
 
     const {title, showMessage, submit} = props;
 
@@ -40,12 +48,17 @@ function SetCriticalValues(props) {
             let values = {}
             values["id"] = criticalValue.uuid
             values["limit"] = kilograms
-            console.log(values)
-            await submit(values);
-            showMessage("success", "Succesfully created pallet");
-            setTimeout(() => {
-                history.push(`/pallets`);
-            }, 1000);
+            validationSchema.isValid(values).then(async (valid) => {
+                if (valid) {
+                    await submit(values);
+                    showMessage("success", "Succesfully created pallet");
+                    setTimeout(() => {
+                        history.push(`/pallets`);
+                    }, 1000);
+                } else {
+                    showMessage("error", "Your input data is not valid. Please check it");
+                }
+            })
         } catch (e) {
             showMessage("error", e.response?.data || "An error ocurred");
         }
