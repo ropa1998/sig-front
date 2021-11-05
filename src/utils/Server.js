@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const backendAxiosInstance = axios.create({
-    // baseURL: "http://localhost:8080"
-    baseURL: "https://sig-back.herokuapp.com/"
+    baseURL: "http://localhost:8080"
+    // baseURL: "https://sig-back.herokuapp.com/"
 });
 
 const pickerAxiosInstance = axios.create({
@@ -38,6 +38,11 @@ export const getTransactions = async () => await backendAxiosInstance.get("/tran
 
 export const getPickerData = async () => await pickerAxiosInstance.get("/picker");
 export const getScaleData = async () => await pickerAxiosInstance.get("/scale");
+
+export const getExistences = async () => await backendAxiosInstance.get("/home/existences");
+
+export const getCriticalValues = async () => await backendAxiosInstance.get("/critical-values");
+export const updateCriticalValue = async (data) => await backendAxiosInstance.put("/critical-values", data);
 
 
 // EDIT PROJECT BY ID

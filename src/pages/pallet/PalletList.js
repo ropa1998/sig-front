@@ -24,7 +24,7 @@ function PalletList(props) {
 
     useEffect(() => {
         fetchPallets();
-    }, [pallets]);
+    }, [setPallets]);
 
     return (
         <TableContainer component={Paper} width={"max-content"}>

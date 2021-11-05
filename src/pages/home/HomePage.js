@@ -2,13 +2,21 @@ import React, {useEffect, useState} from "react";
 import RackDetail from "../../components/RackDetail";
 import {Grid, Typography} from "@mui/material";
 import {withSnackbar} from "../../components/SnackBarHOC";
-import Search from "../../components/Search";
-import {getUserInfoById} from "../../utils/Server";
+import {getExistences, getUserInfoById} from "../../utils/Server";
+import TableContainer from "@mui/material/TableContainer";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import TableBody from "@mui/material/TableBody";
 
 function HomePage(props) {
 
     const {title, showMessage} = props;
     const [user, setUser] = useState(true);
+    const [existences, setExistences] = useState([])
+    const [loading, setLoading] = useState(true);
 
     const initialValues = {
         email: "",
@@ -23,7 +31,14 @@ function HomePage(props) {
             .catch((e) => {
                 showMessage("error", e.response?.data?.errors || "An error ocurred");
             });
-    });
+        getExistences()
+            .then((res) => {
+                setExistences(res.data);
+            })
+            .catch((e) => {
+                showMessage("error", e.response?.data?.errors || "An error ocurred");
+            });
+    }, [setLoading]);
 
     if (user) {
         Object.keys(initialValues).forEach(
@@ -40,6 +55,33 @@ function HomePage(props) {
             </Grid>
             <Grid item xs={12}>
                 <Typography>{subtitle}</Typography>
+            </Grid>
+            <Grid item xs={12}>
+                <TableContainer component={Paper} width={"max-content"}>
+                    <Table sx={{minWidth: 650}} aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Barcode</TableCell>
+                                <TableCell align="center">Current Amount</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {existences.map((row) => (
+                                <TableRow
+                                    key={row.hop}
+                                    sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                                >
+                                    <TableCell component="th" scope="row">
+                                        {row.hop}
+                                    </TableCell>
+                                    <TableCell align="center" component="th" scope="row">
+                                        {row.remainingKilograms}
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
             </Grid>
         </Grid>
     );

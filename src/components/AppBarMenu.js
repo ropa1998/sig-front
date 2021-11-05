@@ -94,6 +94,10 @@ export const AppBarMenu = () => {
                                         <Link href="/add-user" color={"inherit"} underline={"none"}>
                                             <MenuItem onClick={handleCloseUserMenu}>Add User</MenuItem>
                                         </Link>
+                                        <Divider/>
+                                        <Link href="/critical-values" color={"inherit"} underline={"none"}>
+                                            <MenuItem onClick={handleCloseUserMenu}>Set Critical Values</MenuItem>
+                                        </Link>
                                     </Menu>
                                     <IconButton onClick={handleUserMenu} color="inherit">
                                         <AccountCircle/>
