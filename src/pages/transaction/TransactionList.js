@@ -55,6 +55,7 @@ function TransactionList(props) {
                             <TableCell align="center">User</TableCell>
                             <TableCell align="center">Amount</TableCell>
                             <TableCell align="center">Is Extraordinary</TableCell>
+                            <TableCell align="center">Assisting Peripherals</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -72,6 +73,8 @@ function TransactionList(props) {
                                 <TableCell align="center">
                                     <Checkbox checked={row.isExtraordinary} disabled={true}/>
                                 </TableCell>
+                                <TableCell
+                                    align="center">{row.assistedBy === "" ? "NO ASSISTANCE" : row.assistedBy}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

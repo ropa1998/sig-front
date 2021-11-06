@@ -43,6 +43,7 @@ const CreateTransaction = (props) => {
         const [checked, setChecked] = React.useState(false);
         const [isExtraction, setIsExtraction] = React.useState(true);
         const [max, setMax] = React.useState()
+        const [assistingPeripheral, setAssistingPeripheral] = React.useState("")
 
         useEffect(() => {
             getActivePallets()
@@ -63,8 +64,6 @@ const CreateTransaction = (props) => {
         }, [setLoading]);
 
         const getAmount = () => {
-            console.log(`isExtraction ${isExtraction}`)
-            console.log(`isExtraction === true ${isExtraction === true}`)
             if (isExtraction === true) {
                 return kilograms * -1
             } else {
@@ -79,6 +78,7 @@ const CreateTransaction = (props) => {
                 values["userId"] = user.id
                 values["amount"] = getAmount()
                 values["isExtraordinary"] = checked
+                values["assistingPeripheral"] = assistingPeripheral
                 validationSchema.isValid(values).then(async (valid) => {
                         console.log(values["amount"])
                         const kilogramsCondition = (values["amount"] < 0 && pallet.remainingKilograms + values["amount"] >= 0) || values["amount"] >= 0;
@@ -128,6 +128,7 @@ const CreateTransaction = (props) => {
             getScaleData()
                 .then((res) => {
                     setKilograms(res.data["kilograms"])
+                    setAssistingPeripheral("SCALE")
                 })
                 .catch((e) => {
                     showMessage("error", e.response?.data?.errors || "An error ocurred");
