@@ -75,7 +75,7 @@ function PalletList(props) {
                                 <TableCell align="center">{row.remainingKilograms}</TableCell>
                                 <TableCell align="center">{row.position?.name || "NOT ACTIVE"}</TableCell>
                                 <TableCell
-                                    align="center">{row.assistingPeripherals === "" ? "NO ASSISTANT" : row.assistingPeripherals}</TableCell>
+                                    align="center">{row.assistingPeripherals === "" ? "NO ASSISTANCE" : row.assistingPeripherals}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

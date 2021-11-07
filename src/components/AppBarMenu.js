@@ -98,9 +98,6 @@ export const AppBarMenu = () => {
                                         <Link href="/critical-values" color={"inherit"} underline={"none"}>
                                             <MenuItem onClick={handleCloseUserMenu}>Set Critical Values</MenuItem>
                                         </Link>
-                                        <Link href="/csv" color={"inherit"} underline={"none"}>
-                                            <MenuItem onClick={handleCloseUserMenu}>Download CSV</MenuItem>
-                                        </Link>
                                     </Menu>
                                     <IconButton onClick={handleUserMenu} color="inherit">
                                         <AccountCircle/>

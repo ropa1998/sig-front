@@ -21,7 +21,6 @@ import PalletList from "./pages/pallet/PalletList";
 import CreateTransaction from "./pages/transaction/CreateTransaction";
 import TransactionList from "./pages/transaction/TransactionList";
 import SetCriticalValues from "./pages/critical-value/SetCriticalValues";
-import DownloadCSV from "./pages/csv/DownloadCSV";
 
 function App() {
     return (
@@ -77,10 +76,6 @@ function App() {
                             <PrivateRoute path="/transactions">
                                 <TransactionList title="Transaction List"
                                                  subtitle="All the created transactions in the system"/>
-                            </PrivateRoute>
-                            <PrivateRoute path="/csv">
-                                <DownloadCSV title="Download CSV"
-                                             subtitle="See and download the available reports"/>
                             </PrivateRoute>
                         </Switch>
                     </Router>
