@@ -77,7 +77,7 @@ function HomePage(props) {
                                 <TableCell align="center">Current Amount</TableCell>
                                 <TableCell align="center">Critical Value</TableCell>
                                 <TableCell align="center">Positions</TableCell>
-                                <TableCell align="center">Date where critical value would be hit</TableCell>
+                                <TableCell align="center">Date when critical value would be hit</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
