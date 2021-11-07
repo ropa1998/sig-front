@@ -83,7 +83,6 @@ const CreatePallet = (props) => {
                 values["hop"] = hop
                 values["assistingPeripherals"] = assistingPeripherals
                 values["originalKilograms"] = kilograms
-                // values["codeBar"] = codeBar
                 values["userId"] = user["id"]
                 validationSchema.isValid(values).then(async (valid) => {
                         if (valid) {
@@ -122,7 +121,6 @@ const CreatePallet = (props) => {
                     setDate(res.data["expirationDate"])
                     setKilograms(res.data["originalKilograms"])
                     setAssistingPeripherals("PICKER")
-                    // setCodeBar(res.data["codeBar"])
                 })
                 .catch((e) => {
                     showMessage("error", e.response?.data?.errors || "An error ocurred");

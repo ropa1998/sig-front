@@ -4,7 +4,7 @@ import {Switch, Route, BrowserRouter as Router, Redirect} from "react-router-dom
 import {
     login,
     editUserInfo,
-    register, createRack, createPallet, createTransaction
+    register, createRack, createPallet, createTransaction, updateCriticalValue
 } from "./utils/Server";
 import Login from "./pages/session/Login";
 import {AppBarMenu} from "./components/AppBarMenu";
@@ -20,6 +20,7 @@ import CreatePallet from "./pages/pallet/CreatePallet";
 import PalletList from "./pages/pallet/PalletList";
 import CreateTransaction from "./pages/transaction/CreateTransaction";
 import TransactionList from "./pages/transaction/TransactionList";
+import SetCriticalValues from "./pages/critical-value/SetCriticalValues";
 
 function App() {
     return (
@@ -54,6 +55,10 @@ function App() {
                             </PrivateRoute>
                             <PrivateAdminRoute path="/add-rack">
                                 <CreateRack title="Create Rack" subtitle="" submit={createRack}/>
+                            </PrivateAdminRoute>
+                            <PrivateAdminRoute path="/critical-values">
+                                <SetCriticalValues title="Set Critical Values" subtitle=""
+                                                   submit={updateCriticalValue}/>
                             </PrivateAdminRoute>
                             <PrivateAdminRoute path="/add-user">
                                 <Register
