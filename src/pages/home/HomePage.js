@@ -75,84 +75,67 @@ function HomePage(props) {
                 <Typography>{subtitle}</Typography>
             </Grid>
             <Grid item xs={12}>
-                <Typography variant="h5">{"KPIs"}</Typography>
+                <Typography variant="h5">KPIs</Typography>
             </Grid>
-            <Grid container rowSpacing={1} columnSpacing={{xs: 1, sm: 2, md: 3}}>
+            <Grid container xs={12} spacing={3} columnSpacing={{xs: 1, sm: 2, md: 3}}>
                 <Grid item xs={6}>
-                    <Card sx={{minWidth: 500, minHeight: 300}}>
-                        <CardContent sx={{minWidth: 500, minHeight: 300}}>
-                            <Typography sx={{fontSize: 15}} color="text.primary" gutterBottom>
-                                Average permanency of stock
-                            </Typography>
-                            <Typography sx={{fontSize: 180}} color="text.primary">
-                                {kpis.permanency + " days"}
-                            </Typography>
-                        </CardContent>
-                    </Card>
+                    <Typography sx={{fontSize: 40}} color="text.primary" gutterBottom>
+                        Average permanency of stock
+                    </Typography>
+                    <Typography sx={{fontSize: 180}} color="text.primary">
+                        {kpis.permanency + " days"}
+                    </Typography>
                 </Grid>
                 <Grid item xs={6}>
-                    <Card sx={{minWidth: 500, minHeight: 300}}>
-                        <CardContent>
-                            <Chart
-                                width={'500px'}
-                                height={'300px'}
-                                chartType="PieChart"
-                                loader={<div>Loading Chart</div>}
-                                data={[
-                                    ['Status', 'Amount'],
-                                    ['Picked', kpis.picking],
-                                    ['Not Picked', 1 - kpis.picking],
-                                ]}
-                                options={{
-                                    title: 'Receipt Quality',
-                                }}
-                                rootProps={{'data-testid': '1'}}
-                            />
-                        </CardContent>
-                    </Card>
+                    <Chart
+                        width={'500px'}
+                        height={'300px'}
+                        chartType="PieChart"
+                        loader={<div>Loading Chart</div>}
+                        data={[
+                            ['Status', 'Amount'],
+                            ['Assisted', kpis.picking],
+                            ['Not Assisted', 1 - kpis.picking],
+                        ]}
+                        options={{
+                            title: 'Tool assisted transactions (tool assisted transactions over all transactions)',
+                        }}
+                        rootProps={{'data-testid': '1'}}
+                    />
                 </Grid>
                 <Grid item xs={6}>
-                    <Card sx={{minWidth: 500, minHeight: 300}}>
-                        <CardContent>
-                            <Chart
-                                width={'500px'}
-                                height={'300px'}
-                                chartType="PieChart"
-                                loader={<div>Loading Chart</div>}
-                                data={[
-                                    ['Quality', 'Amount'],
-                                    ['Rotten', kpis.stockQuality],
-                                    ['Not Rotten', 1 - kpis.stockQuality],
-                                ]}
-                                options={{
-                                    title: 'Stock Quality',
-                                }}
-                                rootProps={{'data-testid': '1'}}
-                            />
-                        </CardContent>
-                    </Card>
-
+                    <Chart
+                        width={'500px'}
+                        height={'300px'}
+                        chartType="PieChart"
+                        loader={<div>Loading Chart</div>}
+                        data={[
+                            ['Quality', 'Amount'],
+                            ['Corrected', kpis.receiptQuality],
+                            ['Not Corrected', 1 - kpis.receiptQuality],
+                        ]}
+                        options={{
+                            title: 'Transactions Quality (Transactions that were positive extraordinary entry corrections over total transactions)',
+                        }}
+                        rootProps={{'data-testid': '1'}}
+                    />
                 </Grid>
                 <Grid item xs={6}>
-                    <Card sx={{minWidth: 500, minHeight: 300}}>
-                        <CardContent>
-                            <Chart
-                                width={'500px'}
-                                height={'300px'}
-                                chartType="PieChart"
-                                loader={<div>Loading Chart</div>}
-                                data={[
-                                    ['Status', 'Amount'],
-                                    ['Picked', kpis.picking],
-                                    ['Not Picked', 1 - kpis.picking],
-                                ]}
-                                options={{
-                                    title: 'Receipt Quality',
-                                }}
-                                rootProps={{'data-testid': '1'}}
-                            />
-                        </CardContent>
-                    </Card>
+                    <Chart
+                        width={'500px'}
+                        height={'300px'}
+                        chartType="PieChart"
+                        loader={<div>Loading Chart</div>}
+                        data={[
+                            ['Status', 'Amount'],
+                            ['Rotten', kpis.stockQuality],
+                            ['Not Rotten', 1 - kpis.stockQuality],
+                        ]}
+                        options={{
+                            title: 'Stock Access Quality (Rotten pallet extraction vs Total pallet extraction)',
+                        }}
+                        rootProps={{'data-testid': '1'}}
+                    />
                 </Grid>
             </Grid>
             <Grid item xs={12}>
