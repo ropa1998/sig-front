@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import RackDetail from "../../components/RackDetail";
 import {Grid, Typography} from "@mui/material";
 import {withSnackbar} from "../../components/SnackBarHOC";
-import {getExistences, getOrders, getUserInfoById} from "../../utils/Server";
+import {getExistences, getKPIs, getOrders, getUserInfoById} from "../../utils/Server";
 import TableContainer from "@mui/material/TableContainer";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -10,6 +10,8 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
+import {Chart} from "react-google-charts";
+import {Card, CardContent} from "@material-ui/core";
 
 function HomePage(props) {
 
@@ -17,6 +19,7 @@ function HomePage(props) {
     const [user, setUser] = useState(true);
     const [existences, setExistences] = useState([])
     const [orders, setOrders] = useState([])
+    const [kpis, setKpis] = useState([])
     const [loading, setLoading] = useState(true);
 
     const initialValues = {
@@ -41,8 +44,14 @@ function HomePage(props) {
             });
         getOrders()
             .then((res) => {
-                console.log(res.data)
                 setOrders(res.data);
+            })
+            .catch((e) => {
+                showMessage("error", e.response?.data?.errors || "An error ocurred");
+            });
+        getKPIs()
+            .then((res) => {
+                setKpis(res.data);
             })
             .catch((e) => {
                 showMessage("error", e.response?.data?.errors || "An error ocurred");
@@ -64,6 +73,70 @@ function HomePage(props) {
             </Grid>
             <Grid item xs={12}>
                 <Typography>{subtitle}</Typography>
+            </Grid>
+            <Grid item xs={12}>
+                <Typography variant="h5">KPIs</Typography>
+            </Grid>
+            <Grid container xs={12} spacing={3} columnSpacing={{xs: 1, sm: 2, md: 3}}>
+                <Grid item xs={6}>
+                    <Typography sx={{fontSize: 40}} color="text.primary" gutterBottom>
+                        Average permanency of stock
+                    </Typography>
+                    <Typography sx={{fontSize: 180}} color="text.primary">
+                        {kpis.permanency + " days"}
+                    </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                    <Chart
+                        width={'500px'}
+                        height={'300px'}
+                        chartType="PieChart"
+                        loader={<div>Loading Chart</div>}
+                        data={[
+                            ['Status', 'Amount'],
+                            ['Assisted', kpis.picking],
+                            ['Not Assisted', 1 - kpis.picking],
+                        ]}
+                        options={{
+                            title: 'Tool assisted transactions (tool assisted transactions over all transactions)',
+                        }}
+                        rootProps={{'data-testid': '1'}}
+                    />
+                </Grid>
+                <Grid item xs={6}>
+                    <Chart
+                        width={'500px'}
+                        height={'300px'}
+                        chartType="PieChart"
+                        loader={<div>Loading Chart</div>}
+                        data={[
+                            ['Quality', 'Amount'],
+                            ['Corrected', kpis.receiptQuality],
+                            ['Not Corrected', 1 - kpis.receiptQuality],
+                        ]}
+                        options={{
+                            title: 'Transactions Quality (Transactions that were positive extraordinary entry corrections over total transactions)',
+                        }}
+                        rootProps={{'data-testid': '1'}}
+                    />
+                </Grid>
+                <Grid item xs={6}>
+                    <Chart
+                        width={'500px'}
+                        height={'300px'}
+                        chartType="PieChart"
+                        loader={<div>Loading Chart</div>}
+                        data={[
+                            ['Status', 'Amount'],
+                            ['Rotten', kpis.stockQuality],
+                            ['Not Rotten', 1 - kpis.stockQuality],
+                        ]}
+                        options={{
+                            title: 'Stock Access Quality (Rotten pallet extraction vs Total pallet extraction)',
+                        }}
+                        rootProps={{'data-testid': '1'}}
+                    />
+                </Grid>
             </Grid>
             <Grid item xs={12}>
                 <Typography variant="h5">{"Stock"}</Typography>
@@ -99,7 +172,7 @@ function HomePage(props) {
                                         {row.positions.join(" - ")}
                                     </TableCell>
                                     <TableCell align="center" component="th" scope="row">
-                                        {row.limitDate? new Date(row.limitDate).toLocaleString("es-AR"): "NONE"}
+                                        {row.limitDate ? new Date(row.limitDate).toLocaleString("es-AR") : "NONE"}
                                     </TableCell>
                                 </TableRow>
                             ))}

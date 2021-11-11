@@ -41,13 +41,13 @@ export const getScaleData = async () => await pickerAxiosInstance.get("/scale");
 
 export const getExistences = async () => await backendAxiosInstance.get("/home/existences");
 export const getOrders = async () => await backendAxiosInstance.get("/home/orders");
+export const getKPIs = async () => await backendAxiosInstance.get("/kpi/all");
 
 export const getCriticalValues = async () => await backendAxiosInstance.get("/critical-values");
 export const updateCriticalValue = async (data) => await backendAxiosInstance.put("/critical-values", data);
 
 export const downloadTransactionsCSV = async () => await backendAxiosInstance.get("/csv/transactions");
 export const downloadPalletsCSV = async () => await backendAxiosInstance.get("/csv/pallets");
-
 
 
 // EDIT PROJECT BY ID
