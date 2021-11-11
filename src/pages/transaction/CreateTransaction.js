@@ -42,6 +42,7 @@ const CreateTransaction = (props) => {
         const [user, setUser] = React.useState("");
         const [checked, setChecked] = React.useState(false);
         const [isExtraction, setIsExtraction] = React.useState(true);
+        const [another, setAnother] = React.useState(false);
         const [max, setMax] = React.useState()
         const [assistingPeripheral, setAssistingPeripheral] = React.useState("")
 
@@ -81,16 +82,23 @@ const CreateTransaction = (props) => {
                 values["assistingPeripheral"] = assistingPeripheral
                 validationSchema.isValid(values).then(async (valid) => {
                         console.log(values["amount"])
-                        const kilogramsCondition = (values["amount"] < 0 && pallet.remainingKilograms + values["amount"] >= 0) || values["amount"] >= 0;
+                        const remainingKilograms = Number(pallet.remainingKilograms);
+                        const operationResult = remainingKilograms + Number(values["amount"]);
+                        console.log(operationResult)
+                        const kilogramsCondition = (values["amount"] < 0 && operationResult >= 0) || (values["amount"] >= 0 && operationResult <= 1000);
                         if (valid) {
                             if (kilogramsCondition) {
                                 await submit(values)
                                 showMessage("success", "Successfully created transaction");
                                 setTimeout(() => {
-                                    history.push(`/transactions`);
+                                    if (!another) {
+                                        history.push(`/transactions`);
+                                    } else {
+                                        window.location.reload(false);
+                                    }
                                 }, 1000);
                             } else {
-                                const message = `You cannot remove ${kilograms} from this pallet. The limit is ${pallet.remainingKilograms}`;
+                                const message = `The operation is not valid. Please check your values`;
                                 showMessage("error", message);
                             }
 
@@ -106,6 +114,10 @@ const CreateTransaction = (props) => {
 
         const handlePalletChange = (event) => {
             setPallet(event.target.value);
+        };
+
+        const handleAnotherChange = (event) => {
+            setAnother(event.target.value);
         };
 
         const handledCheckedChange = (event) => {
@@ -205,7 +217,14 @@ const CreateTransaction = (props) => {
                                                         value={kilograms}
                                                         onChange={(e) => setKilograms(e.target.value)}
                                                         type="number"
-                                                        InputProps={{inputProps: {min: 0, max: 1000}}}/>
+                                                        InputProps={{
+                                                            inputProps: {
+                                                                min: 0,
+                                                                max: 1000,
+                                                                inputMode: 'numeric',
+                                                                pattern: '[+-]?([0-9]*[.])?[0-9]+'
+                                                            }
+                                                        }}/>
                                                 </Grid>
                                                 <Grid item xs={12}>
                                                     <FormControlLabel control={<Checkbox
@@ -213,6 +232,13 @@ const CreateTransaction = (props) => {
                                                         onChange={handledCheckedChange}
                                                         inputProps={{'aria-label': 'controlled'}}
                                                     />} label="Extraordinary"/>
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <FormControlLabel control={<Checkbox
+                                                        checked={another}
+                                                        onChange={handleAnotherChange}
+                                                        inputProps={{'aria-label': 'controlled'}}
+                                                    />} label="Create another"/>
                                                 </Grid>
                                                 <Grid
                                                     container
