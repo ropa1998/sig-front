@@ -222,7 +222,7 @@ const CreateTransaction = (props) => {
                                                                 min: 0,
                                                                 max: 1000,
                                                                 inputMode: 'numeric',
-                                                                pattern: '[+-]?([0-9]*[.])?[0-9]+'
+                                                                pattern: '([0-9]*[.])?[0-9]+'
                                                             }
                                                         }}/>
                                                 </Grid>

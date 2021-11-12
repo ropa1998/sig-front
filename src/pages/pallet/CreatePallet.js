@@ -244,7 +244,10 @@ const CreatePallet = (props) => {
                                                         type="number"
                                                         InputProps={{
                                                             inputProps: {
-                                                                max: 1000, min: 1
+                                                                min: 0,
+                                                                max: 1000,
+                                                                inputMode: 'numeric',
+                                                                pattern: '([0-9]*[.])?[0-9]+'
                                                             }
                                                         }}
                                                     />
