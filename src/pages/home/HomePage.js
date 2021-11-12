@@ -96,7 +96,7 @@ function HomePage(props) {
                         Average permanency of stock
                     </Typography>
                     <Typography sx={{fontSize: 60}} align={"center"} color="text.primary">
-                        {kpis.permanency === undefined ? "" : kpis.permanency + " days"}
+                        {kpis.permanency === undefined ? "" : kpis.permanency.toFixed(2) + " days"}
                     </Typography>
                 </Grid>
                 <Grid item xs={6}>
@@ -111,7 +111,7 @@ function HomePage(props) {
                             ['Not Assisted', 1 - kpis.picking],
                         ]}
                         options={{
-                            title: 'Tool assisted transactions (tool assisted transactions over all transactions)',
+                            title: 'Tool assisted transactions (Tool assisted transactions over all transactions)',
                         }}
                         rootProps={{'data-testid': '1'}}
                     />
@@ -175,9 +175,7 @@ function HomePage(props) {
                                     <TableCell component="th" scope="row">
                                         {row.hop}
                                     </TableCell>
-                                    {
-                                        getRemainingKilograms(row)
-                                    }
+                                    {getRemainingKilograms(row)}
                                     <TableCell align="center" component="th" scope="row">
                                         {row.criticalValue}
                                     </TableCell>
@@ -205,7 +203,7 @@ function HomePage(props) {
                                 <TableCell align="center">Date</TableCell>
                                 <TableCell align="center">Required Hop</TableCell>
                                 <TableCell align="center">Amount (kg)</TableCell>
-                                <TableCell align="center">Positions to look for</TableCell>
+                                <TableCell align="center">Retrieval steps</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>

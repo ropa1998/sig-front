@@ -77,11 +77,11 @@ function SetCriticalValues(props) {
             <Grid item xs={12}>
                 <Box>
                     <FormControl fullWidth>
-                        <InputLabel>Critical Value</InputLabel>
+                        <InputLabel>Hop Type</InputLabel>
                         <Select
                             id="positionId"
                             value={criticalValue}
-                            label="Critical Value"
+                            label="Hop Type"
                             onChange={handleCriticalValueChange}
                         >
                             {criticalValues.length > 0 &&
@@ -97,7 +97,7 @@ function SetCriticalValues(props) {
             <Grid item xs={12}>
                 <TextField
                     id="originalKilograms"
-                    label="Kilograms"
+                    label="Critical value (kg)"
                     value={kilograms}
                     onChange={(e) => setKilograms(parseFloat(e.target.value))}
                     type="number"
