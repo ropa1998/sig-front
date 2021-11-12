@@ -47,6 +47,17 @@ function TransactionList(props) {
 
     const columns = [
         {
+            field: 'pallet',
+            headerName: 'Pallet name',
+            width: 400,
+            valueGetter: (params) => {
+                console.log(params)
+                console.log(params.value)
+                console.log(params.value.name)
+                return params.value.name
+            }
+        },
+        {
             field: 'date',
             headerName: 'Date',
             flex: 1,
