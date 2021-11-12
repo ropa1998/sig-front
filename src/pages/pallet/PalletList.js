@@ -51,7 +51,7 @@ function PalletList(props) {
         {field: 'remainingKilograms', headerName: 'Remaining Kilograms', flex: 1, type: 'number',},
         {
             field: 'expirationDate',
-            headerName: 'Full name',
+            headerName: 'Expiration',
             flex: 1,
             valueGetter: (params) => {
                 return new Date(params.value).toLocaleDateString('es-AR')
@@ -59,7 +59,7 @@ function PalletList(props) {
         },
         {
             field: 'position',
-            headerName: 'Full name',
+            headerName: 'Position',
             flex: 1,
             valueGetter: (params) =>
             {
