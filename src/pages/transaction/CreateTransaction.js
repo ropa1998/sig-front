@@ -117,7 +117,7 @@ const CreateTransaction = (props) => {
         };
 
         const handleAnotherChange = (event) => {
-            setAnother(event.target.value);
+            setAnother(event.target.checked);
         };
 
         const handledCheckedChange = (event) => {
