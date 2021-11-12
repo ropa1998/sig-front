@@ -78,12 +78,12 @@ function HomePage(props) {
                 <Typography variant="h5">KPIs</Typography>
             </Grid>
             <Grid container xs={12} spacing={3} columnSpacing={{xs: 1, sm: 2, md: 3}}>
-                <Grid item xs={6}>
-                    <Typography sx={{fontSize: 40}} color="text.primary" gutterBottom>
+                <Grid item xs={6} width={'500px'} height={'300px'}>
+                    <Typography sx={{fontSize: 20}} color="text.primary" align={"center"} gutterBottom>
                         Average permanency of stock
                     </Typography>
-                    <Typography sx={{fontSize: 180}} color="text.primary">
-                        {kpis.permanency + " days"}
+                    <Typography sx={{fontSize: 60}} align={"center"} color="text.primary">
+                        {kpis.permanency === undefined ? "" : kpis.permanency + " days" }
                     </Typography>
                 </Grid>
                 <Grid item xs={6}>
@@ -115,7 +115,7 @@ function HomePage(props) {
                             ['Not Corrected', 1 - kpis.receiptQuality],
                         ]}
                         options={{
-                            title: 'Transactions Quality (Transactions that were positive extraordinary entry corrections over total transactions)',
+                            title: 'Transactions Quality (Transactions that were extraordinary corrections vs total transactions)',
                         }}
                         rootProps={{'data-testid': '1'}}
                     />
