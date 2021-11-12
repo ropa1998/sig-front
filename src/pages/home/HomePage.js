@@ -66,6 +66,19 @@ function HomePage(props) {
 
     const subtitle = initialValues.nickname ? `Welcome ${initialValues.nickname}!` : "Welcome!";
 
+    function getRemainingKilograms(row) {
+        const ratio = row.remainingKilograms / row.criticalValue
+        if (ratio <= 1.1) {
+            return <TableCell align="center" component="th" scope="row"
+                              style={{backgroundColor: 'red', color: 'white',}}>
+                {row.remainingKilograms}
+            </TableCell>
+        }
+        return <TableCell align="center" component="th" scope="row">
+            {row.remainingKilograms}
+        </TableCell>
+    }
+
     return (
         <Grid container item xs={12} spacing={3}>
             <Grid item xs={12}>
@@ -83,7 +96,7 @@ function HomePage(props) {
                         Average permanency of stock
                     </Typography>
                     <Typography sx={{fontSize: 60}} align={"center"} color="text.primary">
-                        {kpis.permanency === undefined ? "" : kpis.permanency + " days" }
+                        {kpis.permanency === undefined ? "" : kpis.permanency + " days"}
                     </Typography>
                 </Grid>
                 <Grid item xs={6}>
@@ -162,9 +175,9 @@ function HomePage(props) {
                                     <TableCell component="th" scope="row">
                                         {row.hop}
                                     </TableCell>
-                                    <TableCell align="center" component="th" scope="row">
-                                        {row.remainingKilograms}
-                                    </TableCell>
+                                    {
+                                        getRemainingKilograms(row)
+                                    }
                                     <TableCell align="center" component="th" scope="row">
                                         {row.criticalValue}
                                     </TableCell>
